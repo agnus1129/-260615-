@@ -17,7 +17,7 @@
 ■ 2단계 — Railway 배포
   · railway.app 로그인 → New Project → Deploy from GitHub repo → 그 저장소 선택
   · Variables(환경변수)에 추가:
-        PUSH_TOKEN = NmKKe9K2D6ofw0jSRqDFEGVHCa3S8fMn
+
     (PORT 는 Railway가 자동 주입 — 직접 넣지 말 것)
   · 배포되면 Settings → Networking → Generate Domain 으로 공개주소 생성
         예) https://vom-dash-production.up.railway.app
@@ -25,7 +25,7 @@
 ■ 3단계 — PC 송신기 가동
   · pusher.py 상단(또는 환경변수)에 채우기:
         CLOUD_URL  = (2단계에서 받은 https 주소)
-        PUSH_TOKEN = NmKKe9K2D6ofw0jSRqDFEGVHCa3S8fMn   (Railway 와 반드시 동일)
+
   · 실행:  cd "D:\봄프로젝트(260104)\MT5_ATS(260421)\dash"
            python pusher.py
     (dash_server.py 와 같은 폴더에서 실행 — import 재사용)
