@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>해외선물 자동매매 실황 · Pro-man</title>
+<title>데모 계좌를 이용한 해외선물 모의자동매매 실황 · Pro-man</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
   .acard .name .seedin{color:var(--gold);font-weight:900;font-size:38px}
   .acard .seedpill{font-size:34px;font-weight:900;color:var(--gold);background:rgba(232,182,90,.12);
     border:1px solid rgba(232,182,90,.38);border-radius:999px;padding:6px 18px}
-  /* 현재잔고+평가잔고(좌) | 누적수익률(우) */
+  /* 현재잔고+평가잔고(좌) | 확정수익률+평가수익률(우) */
   .mainrow{display:flex;gap:26px;align-items:center;margin-top:4px}
   .leftcol{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0}
   .rightcol{flex:none;display:flex;flex-direction:column;align-items:flex-end;min-width:0;padding-left:22px;border-left:1px solid var(--hair2)}
@@ -79,6 +79,10 @@
   .rightcol .bk{font-size:28px;color:var(--mu);font-weight:800;letter-spacing:.02em;white-space:nowrap}
   .rightcol .bv2{font-size:62px;font-weight:900;letter-spacing:-.02em;margin-top:4px;line-height:1;white-space:nowrap}
   .acard.pos .rightcol .bv2{color:var(--up)} .acard.neg .rightcol .bv2{color:var(--down)} .acard.flat .rightcol .bv2{color:var(--mu)}
+  .rightcol .retrow{display:flex;flex-direction:column;align-items:flex-end}
+  .rightcol .retrow + .retrow{margin-top:16px}
+  .rightcol .rk{font-size:24px;color:var(--mu);font-weight:800;letter-spacing:.02em;white-space:nowrap}
+  .rightcol .rv2{font-size:46px;font-weight:900;letter-spacing:-.02em;margin-top:2px;line-height:1;white-space:nowrap}
   .arows{display:flex;gap:10px;margin-top:11px}
   .arow{flex:1;background:rgba(255,255,255,.03);border:1px solid var(--hair);border-radius:10px;padding:7px 12px}
   .arow .ak{font-size:14px;color:var(--mu);font-weight:800;letter-spacing:.04em}
@@ -129,7 +133,7 @@
   <header class="hdr">
     <div class="left">
       <div class="eyebrow"><span class="bar"></span>AUTOMATED OVERSEAS FUTURES · 24/7 LIVE</div>
-      <div class="title">데모계좌를 이용한 <b>해외선물 자동매매 실황</b> <span class="by">by Pro-man</span></div>
+      <div class="title">데모 계좌를 이용한 <b>해외선물 모의자동매매 실황</b> <span class="by">by Pro-man</span></div>
       <span class="u"></span>
     </div>
     <div class="right">
@@ -169,6 +173,8 @@ const fmt=(n,d=2)=>Number(n).toLocaleString('en-US',{minimumFractionDigits:d,max
 const sgn=n=>n>0?'+':(n<0?'−':'');
 const cls=n=>n>0?'pos':(n<0?'neg':'flat');
 const arr=n=>n>0?'▲':(n<0?'▼':'■');
+const rpct=a=>a.seed?a.realized/a.seed*100:0;          /* 누적 확정 수익률% = (잔고-시드)/시드 */
+const rcol=v=>v>0?'var(--up)':(v<0?'var(--down)':'var(--mu)');
 const money=n=>sgn(n)+'$'+fmt(Math.abs(n));
 const prev={};
 
@@ -192,7 +198,8 @@ function render(d){
           <div class="bal"><div class="bk">평가 잔고</div><div class="bv mono">$${fmt(a.equity)}</div></div>
         </div>
         <div class="rightcol">
-          <div class="bk">누적수익률</div><div class="bv2 mono">${sgn(a.return_pct)}${fmt(Math.abs(a.return_pct))}%</div>
+          <div class="retrow"><div class="rk">누적 확정 수익률</div><div class="rv2 mono" style="color:${rcol(a.realized)}">${sgn(rpct(a))}${fmt(Math.abs(rpct(a)))}%</div></div>
+          <div class="retrow"><div class="rk">누적 평가 수익률</div><div class="rv2 mono" style="color:${rcol(a.total)}">${sgn(a.return_pct)}${fmt(Math.abs(a.return_pct))}%</div></div>
         </div>
       </div>`;
     host.appendChild(el);
