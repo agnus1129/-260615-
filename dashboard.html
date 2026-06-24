@@ -56,12 +56,12 @@
   .zone.demo .wm{font-size:200px;color:rgba(140,170,200,.085);transform:rotate(-16deg);top:30%;left:-6%}
   .zone>*{position:relative;z-index:1}
 
-  .zhead{display:flex;align-items:center;gap:14px;padding:13px 22px;border-radius:15px;font-weight:900}
-  .zhead .zic{font-size:34px;line-height:1}
+  .zhead{display:flex;align-items:center;gap:14px;padding:12px 22px;border-radius:15px;font-weight:900}
+  .zhead .zic{font-size:32px;line-height:1}
   .zhead .zt{display:flex;flex-direction:column;gap:1px}
-  .zhead .zk{font-size:32px;letter-spacing:.01em;line-height:1}
-  .zhead .ze{font-size:16px;font-weight:800;letter-spacing:.18em}
-  .zhead .zwarn{margin-left:auto;font-size:18px;font-weight:900;padding:6px 16px;border-radius:999px}
+  .zhead .zk{font-size:30px;letter-spacing:.01em;line-height:1}
+  .zhead .ze{font-size:15px;font-weight:800;letter-spacing:.18em}
+  .zhead .zwarn{margin-left:auto;font-size:17px;font-weight:900;padding:6px 15px;border-radius:999px}
   .zone.real .zhead{background:linear-gradient(90deg,var(--real),var(--real2));color:#1B1206;box-shadow:0 6px 24px rgba(255,194,75,.4)}
   .zone.real .zhead .ze{color:#4A340F}
   .zone.real .zhead .zwarn{background:rgba(27,18,6,.28);color:#1B1206;border:1px solid rgba(27,18,6,.35)}
@@ -70,41 +70,37 @@
   .zone.demo .zhead .zwarn{background:rgba(120,145,170,.14);color:#AFC2D6;border:1px solid rgba(120,145,170,.32)}
 
   .zcards{flex:1;display:flex;flex-direction:column;gap:12px;min-height:0}
-  .acard{flex:1;border-radius:16px;padding:14px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px;
+
+  /* ── 카드: 이름+태그+시드 헤더 / 2×2 지표 (압축, 안 잘리게) ── */
+  .acard{flex:1;border-radius:16px;padding:15px 24px;display:flex;flex-direction:column;justify-content:center;gap:12px;
     position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06)}
   .acard .accent{position:absolute;left:0;top:0;bottom:0;width:6px}
   .zone.real .acard{background:linear-gradient(180deg,rgba(255,210,120,.10),rgba(0,0,0,.32));border:2px solid rgba(255,194,75,.5)}
   .zone.real .acard .accent{background:linear-gradient(180deg,var(--real),var(--real2))}
   .zone.demo .acard{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.28));border:2px solid rgba(91,114,135,.32)}
   .zone.demo .acard .accent{background:linear-gradient(180deg,var(--demo),var(--demo2))}
-  .acard .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .acard .nm{display:flex;flex-direction:column;gap:2px;min-width:0}
-  .acard .nm .name{font-size:36px;font-weight:900;line-height:1;white-space:nowrap}
-  .zone.real .nm .name{color:#fff;text-shadow:0 0 18px rgba(255,194,75,.35)}
-  .zone.demo .nm .name{color:#C4D2E0}
-  .acard .nm .sub{font-size:18px;font-weight:800;letter-spacing:.02em}
-  .zone.real .nm .sub{color:var(--real)} .zone.demo .nm .sub{color:var(--demo)}
-  .acard .tag{font-size:15px;font-weight:900;letter-spacing:.1em;padding:5px 13px;border-radius:999px;white-space:nowrap}
+
+  .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .acard .nm{display:flex;align-items:center;gap:13px;min-width:0}
+  .acard .name{font-size:34px;font-weight:900;white-space:nowrap;line-height:1}
+  .zone.real .name{color:#fff;text-shadow:0 0 18px rgba(255,194,75,.4)}
+  .zone.demo .name{color:#DCE7F2}
+  .acard .tag{font-size:15px;font-weight:900;letter-spacing:.08em;padding:5px 13px;border-radius:999px;white-space:nowrap}
   .zone.real .tag{color:#1B1206;background:var(--real);box-shadow:0 0 16px rgba(255,194,75,.45)}
   .zone.demo .tag{color:#9FB3C8;background:rgba(120,145,170,.16);border:1px solid rgba(120,145,170,.4)}
-  .acard .seedpill{font-size:22px;font-weight:900;color:var(--mu);background:rgba(255,255,255,.04);border:1px solid var(--hair);border-radius:999px;padding:3px 14px;align-self:flex-start}
+  .acard .seedpill{font-size:20px;font-weight:900;color:var(--mu);background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;padding:4px 15px;white-space:nowrap}
   .acard .seedpill b{color:#fff}
-  .mainrow{display:flex;gap:24px;align-items:center;margin-top:2px}
-  .leftcol{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
-  .rightcol{flex:none;display:flex;flex-direction:column;align-items:flex-end;min-width:0;padding-left:20px;border-left:1px solid var(--hair2)}
-  .bal .bk{font-size:20px;color:var(--mu);font-weight:800;white-space:nowrap}
-  .bal .bv{font-size:40px;font-weight:900;letter-spacing:-.02em;line-height:1;white-space:nowrap}
-  .zone.real .bal .bv{color:#fff} .zone.demo .bal .bv{color:#BCCAD8}
-  .rightcol .bk{font-size:22px;color:var(--mu);font-weight:800;white-space:nowrap}
-  .rightcol .bv2{font-size:56px;font-weight:900;letter-spacing:-.02em;margin-top:2px;line-height:1;white-space:nowrap}
-  .pos .bv2{color:var(--up)} .neg .bv2{color:var(--down)} .flat .bv2{color:var(--mu)}
-  .acard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;font-size:17px;font-weight:700;color:var(--mu)}
-  .acard .foot .pz b{color:#fff;font-weight:900;font-size:20px}
-  .acard .foot .upd{color:var(--mu2);font-size:15px}
+
+  .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:9px 20px}
+  .acard .cell{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .acard .cell .ck{font-size:18px;color:var(--mu);font-weight:800;white-space:nowrap}
+  .acard .cell .cv{font-size:33px;font-weight:900;letter-spacing:-.01em;line-height:1.04;white-space:nowrap}
+  .zone.real .cell .cv{color:#fff} .zone.demo .cell .cv{color:#C8D6E4}
+  .acard .cell .cv.pos{color:var(--up)!important} .acard .cell .cv.neg{color:var(--down)!important} .acard .cell .cv.flat{color:var(--mu)!important}
 
   .empty{flex:1;border:2.5px dashed rgba(255,194,75,.4);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
     background:repeating-linear-gradient(45deg,rgba(255,194,75,.04),rgba(255,194,75,.04) 16px,transparent 16px,transparent 32px)}
-  .empty .e1{font-size:32px;font-weight:900;color:var(--real);opacity:.85}
+  .empty .e1{font-size:34px;font-weight:900;color:var(--real);opacity:.9}
   .empty .e2{font-size:18px;font-weight:800;color:var(--mu)}
 
   .market{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--hair);border-radius:16px;padding:20px 30px;display:flex;flex-direction:column;box-shadow:var(--shadow);min-height:0}
@@ -119,14 +115,7 @@
   .mrow .rt{display:flex;align-items:baseline;gap:14px}
   .mrow .px{font-size:27px;font-weight:800} .mrow .ch{font-size:23px;font-weight:900}
   .mrow.up .ch{color:var(--up)} .mrow.down .ch{color:var(--down)} .mrow.flat .ch{color:var(--mu)}
-
-  .tape{position:relative;z-index:2;height:52px;margin:0 -46px;background:linear-gradient(180deg,#0c1119,#080b11);border-top:1px solid var(--hair2);display:flex;align-items:center;overflow:hidden}
-  .tape .track{flex:1;display:flex;white-space:nowrap;overflow:hidden;animation:scroll 38s linear infinite}
-  .tape .it{display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-size:20px;font-weight:800;border-right:1px solid var(--hair)}
-  .tape .it .s{color:var(--gold);font-weight:800}
-  .tape .it.up .c{color:var(--up)} .tape .it.down .c{color:var(--down)} .tape .it.flat .c{color:var(--mu)}
-  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-  @media (prefers-reduced-motion:reduce){.tape .track{animation:none}.live .dot{animation:none}}
+  @media (prefers-reduced-motion:reduce){.live .dot{animation:none}}
 </style>
 </head>
 <body>
@@ -168,17 +157,12 @@
 </div></div>
 
 <script>
-// ───────────────────────────────────────────────────────────────
-// 계좌 배치/라벨을 HTML이 자체 결정 (서버 데이터는 acc id 로만 매칭).
-//   서버는 /api/state 로 {accounts:[{acc,seed,equity,balance,return_pct,positions,updated},...]} 제공.
-//   여기 MAP 에 있는 acc 만 화면에 배치. 없는 계좌(acc01/03/04 등)는 방송 비노출.
-// ───────────────────────────────────────────────────────────────
+// 계좌 배치/이름을 HTML이 자체 결정. 서버(/api/state)는 acc id 로만 매칭.
 const MAP = {
-  acc06: {kind:"demo", row:1, label:"전략1호", sub:"acc06"},
-  acc05: {kind:"demo", row:2, label:"전략2호", sub:"acc05"},
-  acc07: {kind:"demo", row:3, label:"전략3호", sub:"acc07"},
-  acc02: {kind:"real", row:3, label:"포세이돈", sub:"acc02 실전"},
-  // 제우스(IC Markets)·하데스는 연결 전까지 아래 PEND 자리표시.
+  acc06: {kind:"demo", row:1, label:"전략1호"},
+  acc05: {kind:"demo", row:2, label:"전략2호"},
+  acc07: {kind:"demo", row:3, label:"전략3호"},
+  acc02: {kind:"real", row:3, label:"포세이돈"},
 };
 const PEND = {
   "real-1": {kind:"real", status:"pending", label:"제우스", sub:"IC Markets 실전 · 입금대기"},
@@ -186,12 +170,11 @@ const PEND = {
   "real-3": {kind:"real", status:"pending", label:"포세이돈", sub:"acc02 실전 · 연결대기"},
 };
 
-// 미리보기용 더미(서버 미연결 시) — 실제로는 /api/state 가 채움
 const DEMO={ts:Date.now(),accounts:[
-  {acc:"acc06",seed:10000,equity:18697.15,balance:18194.59,return_pct:86.97,positions:8,updated:"--:--:--"},
-  {acc:"acc05",seed:3000, equity:2063.80, balance:407.85,  return_pct:-31.21,positions:5,updated:"--:--:--"},
-  {acc:"acc07",seed:10000,equity:10120.55,balance:10080.20,return_pct:1.21, positions:4,updated:"--:--:--"},
-  {acc:"acc02",seed:58,   equity:131.40,  balance:120.30,  return_pct:126.55,positions:2,updated:"--:--:--"},
+  {acc:"acc06",seed:10000,equity:19737.35,balance:18689.15,positions:8,updated:"--:--:--"},
+  {acc:"acc05",seed:3000, equity:11543.65,balance:11506.66,positions:5,updated:"--:--:--"},
+  {acc:"acc07",seed:10000,equity:11987.37,balance:12013.52,positions:4,updated:"--:--:--"},
+  {acc:"acc02",seed:58,   equity:57.28,   balance:60.73,   positions:2,updated:"--:--:--"},
 ],brief:[
   {name:"BITCOIN",price:62971.65,pct:-2.22,digits:2},{name:"GOLD",price:4310.40,pct:-0.15,digits:2},
   {name:"WTI",price:90.893,pct:2.68,digits:3},{name:"NASDAQ",price:28969.45,pct:-2.51,digits:2},
@@ -207,24 +190,21 @@ const arr=n=>n>0?'▲':(n<0?'▼':'■');
 function card(a){
   if(!a)return `<div class="empty"><div class="e1">— 빈 슬롯 —</div><div class="e2">계좌 배정 대기</div></div>`;
   if(a.status==='pending')return `<div class="empty"><div class="e1">${a.label}</div><div class="e2">${a.sub||'연결 준비중'}</div></div>`;
-  const c=cls(a.return_pct);
+  const seed=+a.seed||0, bal=+a.balance||0, eq=+a.equity||0;
+  const rp = seed ? (bal-seed)/seed*100 : 0;   // 확정(실현) 수익률 = (잔고-시드)/시드
+  const vp = seed ? (eq -seed)/seed*100 : 0;   // 평가 수익률      = (평가-시드)/시드
   const tag=a.kind==='real'?'⚡ 실전':'🧪 모의';
-  return `<div class="acard ${c}"><div class="accent"></div>
-    <div class="top">
-      <div class="nm"><div class="name">${a.label}</div><div class="sub">${a.sub||''}</div></div>
-      <span class="tag">${tag}</span>
+  return `<div class="acard"><div class="accent"></div>
+    <div class="chead">
+      <div class="nm"><span class="name">${a.label}</span><span class="tag">${tag}</span></div>
+      <span class="seedpill mono">시드 <b>$${fmt(seed,0)}</b></span>
     </div>
-    <div class="seedpill mono">시드 <b>$${fmt(a.seed,0)}</b></div>
-    <div class="mainrow">
-      <div class="leftcol">
-        <div class="bal"><div class="bk">현재 잔고</div><div class="bv mono">$${fmt(a.balance)}</div></div>
-        <div class="bal"><div class="bk">평가 잔고</div><div class="bv mono">$${fmt(a.equity)}</div></div>
-      </div>
-      <div class="rightcol">
-        <div class="bk">누적수익률</div><div class="bv2 mono">${sgn(a.return_pct)}${fmt(Math.abs(a.return_pct))}%</div>
-      </div>
+    <div class="grid4">
+      <div class="cell"><div class="ck">현재 잔고</div><div class="cv mono">$${fmt(bal)}</div></div>
+      <div class="cell"><div class="ck">평가 잔고</div><div class="cv mono">$${fmt(eq)}</div></div>
+      <div class="cell"><div class="ck">확정 수익률</div><div class="cv mono ${cls(rp)}">${sgn(rp)}${fmt(Math.abs(rp))}%</div></div>
+      <div class="cell"><div class="ck">평가 수익률</div><div class="cv mono ${cls(vp)}">${sgn(vp)}${fmt(Math.abs(vp))}%</div></div>
     </div>
-    <div class="foot"><span class="pz">포지션 <b>${a.positions??0}</b>개</span><span class="upd">⏱ ${a.updated||'--:--:--'}</span></div>
   </div>`;
 }
 
@@ -232,7 +212,7 @@ function render(d){
   const cells={};
   (d.accounts||[]).forEach(a=>{
     const m=MAP[a.acc]; if(!m) return;
-    cells[m.kind+'-'+m.row]=Object.assign({}, a, {label:m.label, sub:m.sub, kind:m.kind, status:'live'});
+    cells[m.kind+'-'+m.row]=Object.assign({}, a, {label:m.label, kind:m.kind, status:'live'});
   });
   let R='',M='';
   for(let r=1;r<=3;r++){
