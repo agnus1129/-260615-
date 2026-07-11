@@ -264,4 +264,28 @@ function tick(){
   $('#clock').textContent = [k.getHours(), k.getMinutes(), k.getSeconds()]
     .map(function(x){ return String(x).padStart(2,'0'); }).join(':');
   $('#date').textContent = k.getFullYear() + '-'
-  
+    + String(k.getMonth()+1).padStart(2,'0') + '-'
+    + String(k.getDate()).padStart(2,'0') + ' (' + WD[k.getDay()] + ')';
+}
+
+function poll(){
+  fetch('/api/state', {cache:'no-store'})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(d){ if(!d.accounts || !d.accounts.length) throw 0; render(d); })
+    .catch(function(){ render(DEMO); });
+}
+
+function fit(){
+  var s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+  document.getElementById('stage').style.transform = 'scale(' + s + ')';
+}
+
+window.addEventListener('resize', fit);
+fit();
+tick();
+setInterval(tick, 1000);
+poll();
+setInterval(poll, 3000);
+</script>
+</body>
+</html>
