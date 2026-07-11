@@ -3,19 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>해외선물 자동매매 실황 · 실전 & 모의 · Pro-man</title>
+<title>해외선물 자동매매 실황 · 실전 &amp; 모의 · Pro-man</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0B0E14; --ink2:#0E131C; --panel:#141A24;
-    --hair:rgba(255,255,255,.08); --hair2:rgba(255,255,255,.14);
+    --hair:rgba(255,255,255,.08);
     --hi:#EAF0FA; --mu:#AAB6C6; --mu2:#7C8A9C;
     --up:#2BD98E; --down:#FF5C6C; --gold:#E8B65A; --gold2:#C8923A;
     --real:#FFC24B; --real2:#D9942E;
     --demo:#5B7287; --demo2:#3C4C5C;
-    --shadow:0 18px 50px rgba(0,0,0,.45);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;height:100%;background:#05070B;overflow:hidden;font-family:'Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased}
@@ -23,99 +22,109 @@
   #fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
   #stage{width:1920px;height:1080px;flex:none;transform-origin:center center;
     background:linear-gradient(180deg,#0B0E14,#080B11 60%,#06080D);
-    position:relative;overflow:hidden;color:var(--hi);padding:28px 46px 16px;display:flex;flex-direction:column;gap:14px}
+    position:relative;overflow:hidden;color:var(--hi);padding:12px 46px 14px;display:flex;flex-direction:column;gap:10px}
 
   .hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;position:relative;z-index:2}
-  .hdr .left{display:flex;flex-direction:column;gap:8px}
-  .eyebrow{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:22px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .hdr .left{display:flex;flex-direction:column;gap:4px}
+  .eyebrow{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:17px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
   .eyebrow .bar{width:42px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
-  .title{font-size:46px;font-weight:900;line-height:1.02;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 30px rgba(232,182,90,.18)}
+  .title{font-size:38px;font-weight:900;line-height:1.02;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 30px rgba(232,182,90,.18)}
   .title .by{color:var(--gold);font-weight:900}
-  .u{display:block;height:5px;width:100%;margin-top:10px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold2) 22%,transparent 60%)}
-  .hdr .right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:none}
-  .live{display:flex;align-items:center;gap:11px;background:rgba(255,92,108,.10);border:1px solid rgba(255,92,108,.35);padding:8px 16px;border-radius:999px}
-  .live .dot{width:12px;height:12px;border-radius:50%;background:var(--down);animation:pulse 1.6s infinite}
-  .live .txt{font-weight:800;letter-spacing:.12em;font-size:21px;color:#fff}
+  .u{display:block;height:4px;width:100%;margin-top:5px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold2) 22%,transparent 60%)}
+  .hdr .right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
+  .live{display:flex;align-items:center;gap:8px;background:rgba(255,92,108,.10);border:1px solid rgba(255,92,108,.35);padding:4px 12px;border-radius:999px}
+  .live .dot{width:9px;height:9px;border-radius:50%;background:var(--down);animation:pulse 1.6s infinite}
+  .live .txt{font-weight:800;letter-spacing:.12em;font-size:16px;color:#fff}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,108,.55)}70%{box-shadow:0 0 0 14px rgba(255,92,108,0)}100%{box-shadow:0 0 0 0 rgba(255,92,108,0)}}
-  .datebox{font-size:34px;font-weight:900;color:var(--gold)}
-  .clock{font-size:48px;font-weight:800;line-height:1}
-  .clock .z{color:var(--mu);font-size:20px;font-weight:800;margin-left:10px;letter-spacing:.08em}
-  .byline{font-size:22px;color:var(--mu);font-weight:800;margin-top:4px}
-  .byline b{color:var(--gold);font-weight:900;font-size:26px}
+  .datebox{font-size:25px;font-weight:900;color:var(--gold)}
+  .clock{font-size:35px;font-weight:800;line-height:1}
+  .clock .z{color:var(--mu);font-size:15px;font-weight:800;margin-left:10px;letter-spacing:.08em}
+  .byline{font-size:16px;color:var(--mu);font-weight:800;margin-top:1px}
+  .byline b{color:var(--gold);font-weight:900;font-size:19px}
 
   .body{display:grid;grid-template-columns:1fr 410px;gap:16px;flex:1;min-height:0;position:relative;z-index:2}
   .board{display:grid;grid-template-columns:1fr 1fr;gap:18px;min-height:0}
 
-  .zone{position:relative;border-radius:22px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden}
+  .zone{position:relative;border-radius:20px;padding:10px 11px 12px;display:flex;flex-direction:column;gap:9px;min-height:0;overflow:hidden}
   .zone.real{background:radial-gradient(120% 80% at 50% -10%,rgba(255,194,75,.16),transparent 60%),linear-gradient(165deg,#33260C,#1B1206 72%);
-    border:3px solid var(--real);box-shadow:0 0 60px rgba(255,194,75,.22),inset 0 0 70px rgba(255,194,75,.05)}
-  .zone.demo{background:linear-gradient(165deg,#141C26,#0B121A 72%);
-    border:3px solid rgba(91,114,135,.45);box-shadow:inset 0 0 70px rgba(0,0,0,.5);filter:saturate(.92)}
+    border:3px solid var(--real);box-shadow:0 0 60px rgba(255,194,75,.22)}
+  .zone.demo{background:linear-gradient(165deg,#141C26,#0B121A 72%);border:3px solid rgba(91,114,135,.45)}
   .zone .wm{position:absolute;font-weight:900;pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:.04em}
   .zone.real .wm{font-size:230px;color:rgba(255,194,75,.07);transform:rotate(-16deg);top:34%;left:-4%}
   .zone.demo .wm{font-size:200px;color:rgba(140,170,200,.085);transform:rotate(-16deg);top:30%;left:-6%}
   .zone>*{position:relative;z-index:1}
 
-  .zhead{display:flex;align-items:center;gap:14px;padding:12px 22px;border-radius:15px;font-weight:900}
-  .zhead .zic{font-size:32px;line-height:1}
+  .zhead{display:flex;align-items:center;gap:12px;padding:8px 18px;border-radius:14px;font-weight:900}
+  .zhead .zic{font-size:25px;line-height:1}
   .zhead .zt{display:flex;flex-direction:column;gap:1px}
-  .zhead .zk{font-size:46px;letter-spacing:.01em;line-height:1}
-  .zhead .ze{font-size:20px;font-weight:800;letter-spacing:.18em}
-  .zhead .zwarn{margin-left:auto;font-size:26px;font-weight:900;padding:8px 18px;border-radius:999px}
-  .zone.real .zhead{background:linear-gradient(90deg,var(--real),var(--real2));color:#1B1206;box-shadow:0 6px 24px rgba(255,194,75,.4)}
+  .zhead .zk{font-size:34px;letter-spacing:.01em;line-height:1}
+  .zhead .ze{font-size:15px;font-weight:800;letter-spacing:.18em}
+  .zhead .zwarn{margin-left:auto;font-size:19px;font-weight:900;padding:5px 14px;border-radius:999px}
+  .zone.real .zhead{background:linear-gradient(90deg,var(--real),var(--real2));color:#1B1206}
   .zone.real .zhead .ze{color:#4A340F}
   .zone.real .zhead .zwarn{background:rgba(27,18,6,.28);color:#1B1206;border:1px solid rgba(27,18,6,.35)}
   .zone.demo .zhead{background:linear-gradient(90deg,#2A3848,#1A2532);color:#AFC2D6;border:1px solid rgba(120,145,170,.3)}
   .zone.demo .zhead .ze{color:#7C90A6}
   .zone.demo .zhead .zwarn{background:rgba(120,145,170,.14);color:#AFC2D6;border:1px solid rgba(120,145,170,.32)}
 
-  .zcards{flex:1;display:flex;flex-direction:column;gap:9px;min-height:0}
+  .zcards{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
 
-  /* ── 카드: 이름+태그+시드 헤더 / 2×2 지표 (압축, 안 잘리게) ── */
-  .acard{flex:1;border-radius:16px;padding:11px 22px;display:flex;flex-direction:column;justify-content:center;gap:7px;
-    position:relative;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06)}
+  /* [크리 260711] 5행 그리드.
+     - 카드 글자: container query(cqh) = 카드 높이 비례 → 행 수 바뀌어도 자동 맞춤.
+     - 카드 여백: .cin 래퍼에 px 고정 (cq 단위는 자기 자신에 안 먹어서 px 로 확실히). */
+  .acard{flex:1;min-height:0;container-type:size;border-radius:16px;display:flex;flex-direction:column;
+    position:relative;overflow:hidden;padding:0;gap:0;box-shadow:0 10px 30px rgba(0,0,0,.55)}
+  .cin{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:12px 26px 12px 32px}
   .acard .accent{position:absolute;left:0;top:0;bottom:0;width:6px}
   .zone.real .acard{background:linear-gradient(180deg,rgba(255,210,120,.10),rgba(0,0,0,.32));border:2px solid rgba(255,194,75,.5)}
   .zone.real .acard .accent{background:linear-gradient(180deg,var(--real),var(--real2))}
   .zone.demo .acard{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.28));border:2px solid rgba(91,114,135,.32)}
   .zone.demo .acard .accent{background:linear-gradient(180deg,var(--demo),var(--demo2))}
 
-  .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .acard .nm{display:flex;align-items:center;gap:13px;min-width:0}
-  .acard .name{font-size:30px;font-weight:900;white-space:nowrap;line-height:1}
-  .zone.real .name{color:#fff;text-shadow:0 0 18px rgba(255,194,75,.4)}
-  .zone.demo .name{color:#DCE7F2}
-  .acard .tag{font-size:22px;font-weight:900;letter-spacing:.08em;padding:6px 16px;border-radius:999px;white-space:nowrap}
-  .zone.real .tag{color:#1B1206;background:var(--real);box-shadow:0 0 16px rgba(255,194,75,.45)}
+  .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0}
+  .acard .nm{display:flex;align-items:center;gap:10px;flex:1 1 auto;min-width:0;overflow:hidden}
+  .acard .name{font-size:27px;font-size:17cqh;font-weight:900;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
+  .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
+  .acard .tag{font-size:16px;font-size:10cqh;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
+  .zone.real .tag{color:#1B1206;background:var(--real)}
   .zone.demo .tag{color:#9FB3C8;background:rgba(120,145,170,.16);border:1px solid rgba(120,145,170,.4)}
-  .acard .seedpill{font-size:36px;font-weight:900;color:var(--mu);background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;padding:5px 20px;white-space:nowrap}
+  .acard .seedpill{font-size:24px;font-size:15cqh;font-weight:900;color:var(--mu);background:rgba(255,255,255,.05);
+    border:1px solid var(--hair);border-radius:999px;padding:3px 14px;white-space:nowrap;line-height:1;flex:none}
   .acard .seedpill b{color:#fff}
 
-  .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:5px 18px}
-  .acard .cell{display:flex;flex-direction:column;gap:2px;min-width:0}
-  .acard .cell .ck{font-size:19px;color:var(--mu);font-weight:800;white-space:nowrap}
-  .acard .cell .cv{font-size:37px;font-weight:900;letter-spacing:-.01em;line-height:1.02;white-space:nowrap}
+  /* [크리 260711] 이름표를 숫자 '위'가 아니라 '옆'으로 → 세로 한 줄 절약 → 숫자를 크게.
+     긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
+  .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
+  .acard .cell{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;min-width:0;overflow:hidden}
+  .acard .cell .ck{font-size:17px;font-size:11cqh;color:var(--mu);font-weight:800;line-height:1.1;
+    flex:0 0 auto;max-width:42%;white-space:normal;word-break:keep-all}
+  .acard .cell .cv{font-size:38px;font-size:24cqh;font-weight:900;letter-spacing:-.01em;line-height:1.02;
+    white-space:nowrap;flex:1 1 auto;min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis}
   .zone.real .cell .cv{color:#fff} .zone.demo .cell .cv{color:#C8D6E4}
   .acard .cell .cv.pos{color:var(--up)!important} .acard .cell .cv.neg{color:var(--down)!important} .acard .cell .cv.flat{color:var(--mu)!important}
 
-  .empty{flex:1;border:2.5px dashed rgba(255,194,75,.4);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  .empty{flex:1;min-height:0;container-type:size;padding:10px 16px;border:2.5px dashed rgba(255,194,75,.4);border-radius:16px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
     background:repeating-linear-gradient(45deg,rgba(255,194,75,.04),rgba(255,194,75,.04) 16px,transparent 16px,transparent 32px)}
-  .empty .e1{font-size:44px;font-weight:900;color:var(--real);opacity:.9}
-  .empty .e2{font-size:22px;font-weight:800;color:var(--mu)}
+  .empty .e1{font-size:38px;font-size:27cqh;font-weight:900;color:var(--real);opacity:.9}
+  .empty .e2{font-size:18px;font-size:14cqh;font-weight:800;color:var(--mu)}
+  .zone.demo .empty{border-color:rgba(120,145,170,.42);
+    background:repeating-linear-gradient(45deg,rgba(140,170,200,.045),rgba(140,170,200,.045) 16px,transparent 16px,transparent 32px)}
+  .zone.demo .empty .e1{color:var(--demo)}
 
-  .market{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--hair);border-radius:16px;padding:20px 30px;display:flex;flex-direction:column;box-shadow:var(--shadow);min-height:0}
+  .market{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--hair);border-radius:16px;
+    padding:20px 30px;display:flex;flex-direction:column;min-height:0}
   .market .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-  .market .mh .t{font-size:28px;font-weight:900}
+  .market .mh .t{font-size:32px;font-weight:900}
   .market .mh .tf{font-size:18px;color:var(--gold);font-weight:800;border:1px solid rgba(232,182,90,.3);border-radius:8px;padding:4px 11px}
   #mrows{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:9px;margin-top:4px}
-  .mrow{display:flex;flex-direction:column;gap:3px;padding:10px 15px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  .mrow{display:flex;flex-direction:column;gap:3px;padding:12px 20px;background:rgba(255,255,255,.035);
     border:1px solid var(--hair);border-left:4px solid var(--mu2);border-radius:12px}
-  .mrow.up{border-left-color:var(--up)} .mrow.down{border-left-color:var(--down)} .mrow.flat{border-left-color:var(--mu2)}
-  .mrow .sym{font-size:27px;font-weight:900}
+  .mrow.up{border-left-color:var(--up)} .mrow.down{border-left-color:var(--down)}
+  .mrow .sym{font-size:31px;font-weight:900}
   .mrow .rt{display:flex;align-items:baseline;gap:14px}
-  .mrow .px{font-size:27px;font-weight:800} .mrow .ch{font-size:23px;font-weight:900}
+  .mrow .px{font-size:31px;font-weight:800} .mrow .ch{font-size:26px;font-weight:900}
   .mrow.up .ch{color:var(--up)} .mrow.down .ch{color:var(--down)} .mrow.flat .ch{color:var(--mu)}
-  @media (prefers-reduced-motion:reduce){.live .dot{animation:none}}
 </style>
 </head>
 <body>
@@ -157,86 +166,102 @@
 </div></div>
 
 <script>
-// 계좌 배치/이름을 HTML이 자체 결정. 서버(/api/state)는 acc id 로만 매칭.
-const MAP = {
-  acc06: {kind:"demo", row:1, label:"전략1호"},
-  acc05: {kind:"demo", row:2, label:"전략5호(음양)"},
-  acc08: {kind:"demo", row:3, label:"전략4호"},
-  acc02: {kind:"real", row:3, label:"포세이돈"},
+// [크리 260711] 5행 그리드. ROWS 만 바꾸면 행 수 변경(카드 글자는 CSS가 자동 맞춤).
+// 네이밍: 실전=신 서열(제우스▸하데스▸포세이돈), 데모=영웅(수련 중).
+var ROWS = 5;
+
+var MAP = {
+  acc10: {kind:"real", row:1, label:"제우스"},
   acc09: {kind:"real", row:2, label:"하데스"},
-};
-const PEND = {
-  "real-1": {kind:"real", status:"pending", label:"제우스", sub:"IC Markets 실전 · 입금대기"},
-  "real-2": {kind:"real", status:"pending", label:"하데스", sub:"밴티지 실전 · 입금/연결 대기"},
-  "real-3": {kind:"real", status:"pending", label:"포세이돈", sub:"acc02 실전 · 연결대기"},
+  acc02: {kind:"real", row:3, label:"포세이돈"},
+  acc06: {kind:"demo", row:1, label:"전략1호(헤라클레스)"},
+  acc05: {kind:"demo", row:2, label:"전략5호(음양)"},
+  acc08: {kind:"demo", row:3, label:"전략6호(아킬레우스)"}
 };
 
-const DEMO={ts:Date.now(),accounts:[
-  {acc:"acc06",seed:10000,equity:19737.35,balance:18689.15,positions:8,updated:"--:--:--"},
-  {acc:"acc05",seed:3000, equity:11543.65,balance:11506.66,positions:5,updated:"--:--:--"},
-  {acc:"acc08",seed:3000,equity:3012.40,balance:3004.10,positions:3,updated:"--:--:--"},
-  {acc:"acc02",seed:58,   equity:57.28,   balance:60.73,   positions:2,updated:"--:--:--"},
-],brief:[
-  {name:"BITCOIN",price:62971.65,pct:-2.22,digits:2},{name:"GOLD",price:4310.40,pct:-0.15,digits:2},
-  {name:"WTI",price:90.893,pct:2.68,digits:3},{name:"NASDAQ",price:28969.45,pct:-2.51,digits:2},
-  {name:"HANGSENG",price:24608.00,pct:-2.40,digits:2},
+// 미연결 계좌 자리표시. 지금은 전부 연결됨.
+//   예) "real-4": {kind:"real", status:"pending", label:"아테나", sub:"입금 대기"}
+var PEND = {};
+
+var DEMO = {accounts:[
+  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00},
+  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28},
+  {acc:"acc02", seed:58,    equity:57.28,    balance:60.73},
+  {acc:"acc06", seed:10000, equity:19737.35, balance:18689.15},
+  {acc:"acc05", seed:3000,  equity:11543.65, balance:11506.66},
+  {acc:"acc08", seed:10000, equity:8059.00,  balance:8059.00}
+], brief:[
+  {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
+  {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
+  {name:"WTI",     price:90.893,   pct:2.68,  digits:3},
+  {name:"NASDAQ",  price:28969.45, pct:-2.51, digits:2},
+  {name:"HANGSENG",price:24608.00, pct:-2.40, digits:2}
 ]};
 
-const $=s=>document.querySelector(s);
-const fmt=(n,d=2)=>Number(n||0).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
-const sgn=n=>n>0?'+':(n<0?'−':'');
-const cls=n=>n>0?'pos':(n<0?'neg':'flat');
-const arr=n=>n>0?'▲':(n<0?'▼':'■');
+function $(s){ return document.querySelector(s); }
+function fmt(n,d){ if(d===undefined) d=2;
+  return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:d, maximumFractionDigits:d}); }
+function sgn(n){ return n>0?'+':(n<0?'−':''); }
+function cls(n){ return n>0?'pos':(n<0?'neg':'flat'); }
+function arr(n){ return n>0?'▲':(n<0?'▼':'■'); }
 
 function card(a){
-  if(!a)return `<div class="empty"><div class="e1">— 빈 슬롯 —</div><div class="e2">계좌 배정 대기</div></div>`;
-  if(a.status==='pending')return `<div class="empty"><div class="e1">${a.label}</div><div class="e2">${a.sub||'연결 준비중'}</div></div>`;
-  const seed=+a.seed||0, bal=+a.balance||0, eq=+a.equity||0;
-  const rp = seed ? (bal-seed)/seed*100 : 0;   // 확정(실현) 수익률 = (잔고-시드)/시드
-  const vp = seed ? (eq -seed)/seed*100 : 0;   // 평가 수익률      = (평가-시드)/시드
-  const tag=a.kind==='real'?'⚡ 실전':'🧪 모의';
-  return `<div class="acard"><div class="accent"></div>
-    <div class="chead">
-      <div class="nm"><span class="name">${a.label}</span><span class="tag">${tag}</span></div>
-      <span class="seedpill mono">시드 <b>$${fmt(seed,0)}</b></span>
-    </div>
-    <div class="grid4">
-      <div class="cell"><div class="ck">현재 잔고</div><div class="cv mono">$${fmt(bal)}</div></div>
-      <div class="cell"><div class="ck">평가 잔고</div><div class="cv mono">$${fmt(eq)}</div></div>
-      <div class="cell"><div class="ck">누적 확정 수익률</div><div class="cv mono ${cls(rp)}">${sgn(rp)}${fmt(Math.abs(rp))}%</div></div>
-      <div class="cell"><div class="ck">누적 평가 수익률</div><div class="cv mono ${cls(vp)}">${sgn(vp)}${fmt(Math.abs(vp))}%</div></div>
-    </div>
-  </div>`;
+  if(!a){
+    return '<div class="empty"><div class="e1">— 빈 슬롯 —</div><div class="e2">계좌 배정 대기</div></div>';
+  }
+  if(a.status === 'pending'){
+    return '<div class="empty"><div class="e1">'+a.label+'</div><div class="e2">'+(a.sub||'연결 준비중')+'</div></div>';
+  }
+  var seed = +a.seed || 0, bal = +a.balance || 0, eq = +a.equity || 0;
+  var rp = seed ? (bal-seed)/seed*100 : 0;   // 확정 수익률 = (잔고-시드)/시드
+  var vp = seed ? (eq -seed)/seed*100 : 0;   // 평가 수익률 = (평가-시드)/시드
+  var tag = (a.kind === 'real') ? '⚡ 실전' : '🧪 모의';
+  return '<div class="acard"><div class="accent"></div><div class="cin">'
+    + '<div class="chead">'
+    +   '<div class="nm"><span class="name">'+a.label+'</span><span class="tag">'+tag+'</span></div>'
+    +   '<span class="seedpill mono">시드 <b>$'+fmt(seed,0)+'</b></span>'
+    + '</div>'
+    + '<div class="grid4">'
+    +   '<div class="cell"><div class="ck">현재 잔고</div><div class="cv mono">$'+fmt(bal)+'</div></div>'
+    +   '<div class="cell"><div class="ck">평가 잔고</div><div class="cv mono">$'+fmt(eq)+'</div></div>'
+    +   '<div class="cell"><div class="ck">누적 확정 수익률</div><div class="cv mono '+cls(rp)+'">'+sgn(rp)+fmt(Math.abs(rp))+'%</div></div>'
+    +   '<div class="cell"><div class="ck">누적 평가 수익률</div><div class="cv mono '+cls(vp)+'">'+sgn(vp)+fmt(Math.abs(vp))+'%</div></div>'
+    + '</div>'
+    + '</div></div>';
 }
 
 function render(d){
-  const cells={};
-  (d.accounts||[]).forEach(a=>{
-    const m=MAP[a.acc]; if(!m) return;
-    cells[m.kind+'-'+m.row]=Object.assign({}, a, {label:m.label, kind:m.kind, status:'live'});
+  var cells = {};
+  (d.accounts || []).forEach(function(a){
+    var m = MAP[a.acc];
+    if(!m) return;
+    cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:m.label, kind:m.kind, status:'live'});
   });
-  let R='',M='';
-  for(let r=1;r<=3;r++){
-    R+=card(cells['real-'+r] || PEND['real-'+r] || null);
-    M+=card(cells['demo-'+r] || null);
+  var R = '', M = '';
+  for(var r = 1; r <= ROWS; r++){
+    R += card(cells['real-'+r] || PEND['real-'+r] || null);
+    M += card(cells['demo-'+r] || PEND['demo-'+r] || null);
   }
-  $('#realCards').innerHTML=R; $('#demoCards').innerHTML=M;
+  $('#realCards').innerHTML = R;
+  $('#demoCards').innerHTML = M;
 
-  const m=$('#mrows'); m.innerHTML='';
-  (d.brief||[]).forEach(s=>{const c=cls(s.pct);const row=document.createElement('div');row.className='mrow '+c;
-    row.innerHTML=`<span class="sym">${s.name}</span><span class="rt"><span class="px mono">${fmt(s.price,s.digits??2)}</span><span class="ch mono">${arr(s.pct)} ${sgn(s.pct)}${fmt(Math.abs(s.pct))}%</span></span>`;m.appendChild(row);});
+  var m = $('#mrows');
+  m.innerHTML = '';
+  (d.brief || []).forEach(function(s){
+    var row = document.createElement('div');
+    row.className = 'mrow ' + cls(s.pct);
+    row.innerHTML = '<span class="sym">'+s.name+'</span>'
+      + '<span class="rt"><span class="px mono">'+fmt(s.price, (s.digits===undefined?2:s.digits))+'</span>'
+      + '<span class="ch mono">'+arr(s.pct)+' '+sgn(s.pct)+fmt(Math.abs(s.pct))+'%</span></span>';
+    m.appendChild(row);
+  });
 }
 
-const WD=['일','월','화','수','목','금','토'];
-function tick(){const n=new Date();const k=new Date(n.getTime()+(n.getTimezoneOffset()+540)*60000);
-  $('#clock').textContent=[k.getHours(),k.getMinutes(),k.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
-  $('#date').textContent=`${k.getFullYear()}-${String(k.getMonth()+1).padStart(2,'0')}-${String(k.getDate()).padStart(2,'0')} (${WD[k.getDay()]})`;}
-setInterval(tick,1000);tick();
-
-async function poll(){try{const r=await fetch('/api/state',{cache:'no-store'});if(!r.ok)throw 0;const d=await r.json();if(!d.accounts||!d.accounts.length)throw 0;render(d);}catch(e){render(DEMO);}}
-poll();setInterval(poll,3000);
-function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('stage').style.transform='scale('+s+')';}
-addEventListener('resize',fit);fit();
-</script>
-</body>
-</html>
+var WD = ['일','월','화','수','목','금','토'];
+function tick(){
+  var n = new Date();
+  var k = new Date(n.getTime() + (n.getTimezoneOffset() + 540) * 60000);
+  $('#clock').textContent = [k.getHours(), k.getMinutes(), k.getSeconds()]
+    .map(function(x){ return String(x).padStart(2,'0'); }).join(':');
+  $('#date').textContent = k.getFullYear() + '-'
+  
