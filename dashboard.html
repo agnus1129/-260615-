@@ -81,8 +81,10 @@
   .zone.demo .acard{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.28));border:2px solid rgba(91,114,135,.32)}
   .zone.demo .acard .accent{background:linear-gradient(180deg,var(--demo),var(--demo2))}
 
-  .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0}
-  .acard .nm{display:flex;align-items:center;gap:10px;flex:1 1 auto;min-width:0;overflow:hidden}
+  /* [크리 260713] 포지션 칩이 추가돼 가로가 빡빡해짐 → 간격을 조여 자리를 만든다.
+     계좌명(.nm)은 flex 로 줄어들며 말줄임 처리되므로 깨지지 않는다. */
+  .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}
+  .acard .nm{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
   .acard .name{font-size:27px;font-size:17cqh;font-weight:900;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
   .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
   .acard .tag{font-size:16px;font-size:10cqh;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
@@ -91,6 +93,17 @@
   .acard .seedpill{font-size:24px;font-size:15cqh;font-weight:900;color:var(--mu);background:rgba(255,255,255,.05);
     border:1px solid var(--hair);border-radius:999px;padding:3px 14px;white-space:nowrap;line-height:1;flex:none}
   .acard .seedpill b{color:#fff}
+
+  /* [크리 260713] 현재 보유 포지션 수 — 계좌명과 시드 사이. 실시간(3초 폴링).
+     0개 = 조용히, 1개 이상 = 강조. 노출 상태가 한눈에 보이게. */
+  .acard .pospill{font-size:22px;font-size:14cqh;font-weight:900;color:var(--mu);
+    background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
+    padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
+  .acard .pospill b{color:#fff}
+  .zone.real .acard .pospill.on{color:#3A2A08;background:var(--real);border-color:var(--real)}
+  .zone.real .acard .pospill.on b{color:#1B1206}
+  .zone.demo .acard .pospill.on{color:#0B121A;background:#8FA8BE;border-color:#8FA8BE}
+  .zone.demo .acard .pospill.on b{color:#0B121A}
 
   /* [크리 260711] 이름표를 숫자 '위'가 아니라 '옆'으로 → 세로 한 줄 절약 → 숫자를 크게.
      긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
@@ -184,12 +197,12 @@ var MAP = {
 var PEND = {};
 
 var DEMO = {accounts:[
-  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00},
-  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28},
-  {acc:"acc02", seed:58,    equity:57.28,    balance:60.73},
-  {acc:"acc06", seed:10000, equity:19737.35, balance:18689.15},
-  {acc:"acc05", seed:3000,  equity:11543.65, balance:11506.66},
-  {acc:"acc08", seed:10000, equity:8059.00,  balance:8059.00}
+  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0},
+  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7},
+  {acc:"acc02", seed:58,    equity:57.28,    balance:60.73,   positions:3},
+  {acc:"acc06", seed:10000, equity:19737.35, balance:18689.15,positions:8},
+  {acc:"acc05", seed:3000,  equity:11543.65, balance:11506.66,positions:1},
+  {acc:"acc08", seed:10000, equity:8059.00,  balance:8059.00, positions:11}
 ], brief:[
   {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
   {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
@@ -216,9 +229,14 @@ function card(a){
   var rp = seed ? (bal-seed)/seed*100 : 0;   // 확정 수익률 = (잔고-시드)/시드
   var vp = seed ? (eq -seed)/seed*100 : 0;   // 평가 수익률 = (평가-시드)/시드
   var tag = (a.kind === 'real') ? '⚡ 실전' : '🧪 모의';
+  // [크리 260713] 계좌명과 시드 사이에 '현재 보유 포지션 수' 실시간 표시.
+  //   0개면 조용히(muted), 1개 이상이면 강조(on) — 한눈에 노출 상태가 보이게.
+  var pos = (a.positions === undefined || a.positions === null) ? 0 : (+a.positions);
+  var posCls = pos > 0 ? 'pospill on' : 'pospill';
   return '<div class="acard"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span><span class="tag">'+tag+'</span></div>'
+    +   '<span class="'+posCls+' mono">포지션 <b>'+pos+'</b></span>'
     +   '<span class="seedpill mono">시드 <b>$'+fmt(seed,0)+'</b></span>'
     + '</div>'
     + '<div class="grid4">'
