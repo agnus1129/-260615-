@@ -100,10 +100,14 @@
     background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
     padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
   .acard .pospill b{color:#fff}
-  .zone.real .acard .pospill.on{color:#3A2A08;background:var(--real);border-color:var(--real)}
-  .zone.real .acard .pospill.on b{color:#1B1206}
-  .zone.demo .acard .pospill.on{color:#0B121A;background:#8FA8BE;border-color:#8FA8BE}
-  .zone.demo .acard .pospill.on b{color:#0B121A}
+  /* [크리 260713] 색 바탕에 어두운 글자는 글자가 파인 것처럼 보인다.
+     → 바탕은 어둡게 두고 '글자에만' 색을 입힌다 (⚡실전 태그와 같은 결). */
+  .zone.real .acard .pospill.on{color:var(--real);background:rgba(255,194,75,.10);
+    border-color:rgba(255,194,75,.55)}
+  .zone.real .acard .pospill.on b{color:var(--real)}
+  .zone.demo .acard .pospill.on{color:#A9C0D6;background:rgba(140,170,200,.10);
+    border-color:rgba(140,170,200,.45)}
+  .zone.demo .acard .pospill.on b{color:#D2E2F0}
 
   /* [크리 260711] 이름표를 숫자 '위'가 아니라 '옆'으로 → 세로 한 줄 절약 → 숫자를 크게.
      긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
