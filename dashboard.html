@@ -109,6 +109,14 @@
     border-color:rgba(140,170,200,.45)}
   .zone.demo .acard .pospill.on b{color:#D2E2F0}
 
+  /* [크리 260714] 매매 착수 후 N주차 — 포지션 칩 왼쪽.
+     서버가 config/strategy_start.json 을 읽어 매일 자동 갱신한다.
+     가상매매 검증을 시작하면 '몇 주째 쌓였나'가 가장 중요한 숫자가 된다. */
+  .acard .weekpill{font-size:22px;font-size:14cqh;font-weight:900;color:var(--mu);
+    background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
+    padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
+  .acard .weekpill b{color:#fff}
+
   /* [크리 260711] 이름표를 숫자 '위'가 아니라 '옆'으로 → 세로 한 줄 절약 → 숫자를 크게.
      긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
   .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
@@ -237,9 +245,15 @@ function card(a){
   //   0개면 조용히(muted), 1개 이상이면 강조(on) — 한눈에 노출 상태가 보이게.
   var pos = (a.positions === undefined || a.positions === null) ? 0 : (+a.positions);
   var posCls = pos > 0 ? 'pospill on' : 'pospill';
+  // [크리 260714] 매매 착수 후 N주차. 서버(dash_server._week_no)가 매일 자동 계산.
+  //   시작일은 config/strategy_start.json — 전략을 바꾸면 거기 날짜만 새로 찍으면 리셋.
+  var wk = (a.week === undefined || a.week === null) ? null : (+a.week);
+  var wkHtml = (wk === null) ? ''
+    : '<span class="weekpill mono"><b>'+wk+'</b>주차</span>';
   return '<div class="acard"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span><span class="tag">'+tag+'</span></div>'
+    +   wkHtml
     +   '<span class="'+posCls+' mono">포지션 <b>'+pos+'</b></span>'
     +   '<span class="seedpill mono">시드 <b>$'+fmt(seed,0)+'</b></span>'
     + '</div>'
