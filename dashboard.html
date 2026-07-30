@@ -85,7 +85,7 @@
      계좌명(.nm)은 flex 로 줄어들며 말줄임 처리되므로 깨지지 않는다. */
   .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}
   .acard .nm{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
-  .acard .name{font-size:27px;font-size:17cqh;font-weight:900;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
+  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:900;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
   .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
   .acard .tag{font-size:16px;font-size:10cqh;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
   .zone.real .tag{color:#1B1206;background:var(--real)}
@@ -196,12 +196,13 @@
 var ROWS = 5;
 
 var MAP = {
-  acc10: {kind:"real", row:1, label:"제우스"},
-  acc09: {kind:"real", row:2, label:"하데스"},
-  acc02: {kind:"real", row:3, label:"포세이돈"},
-  acc06: {kind:"demo", row:1, label:"전략1호(헤라클레스)"},
-  acc05: {kind:"demo", row:2, label:"전략5호(음양)"},
-  acc08: {kind:"demo", row:3, label:"전략6호(아킬레우스)"}
+  acc10: {kind:"real", row:1, label:"제우스 · Vantage"},
+  acc09: {kind:"real", row:2, label:"하데스 · Vantage"},
+  acc02: {kind:"real", row:3, label:"포세이돈 · FxPro"},
+  acc06: {kind:"demo", row:1, label:"전략1호 · FxPro"},
+  acc05: {kind:"demo", row:2, label:"전략5호 · FxPro"},
+  acc08: {kind:"demo", row:3, label:"전략6호 · FxPro"},
+  acc11: {kind:"demo", row:4, label:"전략7호 · IC Markets"}
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -214,7 +215,8 @@ var DEMO = {accounts:[
   {acc:"acc02", seed:58,    equity:57.28,    balance:60.73,   positions:3},
   {acc:"acc06", seed:10000, equity:19737.35, balance:18689.15,positions:8},
   {acc:"acc05", seed:3000,  equity:11543.65, balance:11506.66,positions:1},
-  {acc:"acc08", seed:10000, equity:8059.00,  balance:8059.00, positions:11}
+  {acc:"acc08", seed:10000, equity:8059.00,  balance:8059.00, positions:11},
+  {acc:"acc11", seed:3000,  equity:3000.00,  balance:3000.00, positions:0}
 ], brief:[
   {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
   {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
@@ -252,7 +254,7 @@ function card(a){
     : '<span class="weekpill mono"><b>'+wk+'</b>주차</span>';
   return '<div class="acard"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
-    +   '<div class="nm"><span class="name">'+a.label+'</span><span class="tag">'+tag+'</span></div>'
+    +   '<div class="nm"><span class="name">'+a.label+'</span></div>'
     +   wkHtml
     +   '<span class="'+posCls+' mono">포지션 <b>'+pos+'</b></span>'
     +   '<span class="seedpill mono">시드 <b>$'+fmt(seed,0)+'</b></span>'
