@@ -6,7 +6,7 @@
 <title>해외선물 자동매매 실황 · 실전 &amp; 모의 · Pro-man</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0B0E14; --ink2:#0E131C; --panel:#141A24;
@@ -17,8 +17,13 @@
     --demo:#5B7287; --demo2:#3C4C5C;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{width:100%;height:100%;background:#05070B;overflow:hidden;font-family:'Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased}
-  .mono{font-family:'JetBrains Mono',monospace;font-variant-numeric:tabular-nums}
+  html,body{width:100%;height:100%;background:#05070B;overflow:hidden;font-family:'IBM Plex Sans KR','Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Sans KR','Noto Sans KR',sans-serif;font-variant-numeric:tabular-nums;font-feature-settings:'tnum' 1;letter-spacing:.005em}
+  /* [크리 260818 3차] IBM Plex Sans KR 로 확정 (주인님 선택).
+     JetBrains Mono = 0 안에 점 · Roboto Mono = 0 안에 빗금.
+     고정폭 서체는 0 을 일부러 표시하는 게 설계라 이 화면에 안 맞는다.
+     tabular-nums 로 자릿수만 맞추고 글자꼴은 본문과 한 가족으로 간다. */
+  .clock.mono,.clock.mono .z{font-weight:700}
   #fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
   #stage{width:1920px;height:1080px;flex:none;transform-origin:center center;
     background:linear-gradient(180deg,#0B0E14,#080B11 60%,#06080D);
@@ -26,21 +31,21 @@
 
   .hdr{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;position:relative;z-index:2}
   .hdr .left{display:flex;flex-direction:column;gap:4px}
-  .eyebrow{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:17px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+  .eyebrow{display:flex;align-items:center;gap:14px;color:var(--gold);font-size:17px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
   .eyebrow .bar{width:42px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:2px}
-  .title{font-size:38px;font-weight:900;line-height:1.02;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 30px rgba(232,182,90,.18)}
-  .title .by{color:var(--gold);font-weight:900}
+  .title{font-size:38px;font-weight:700;line-height:1.02;letter-spacing:-.01em;color:#fff;text-shadow:0 2px 30px rgba(232,182,90,.18)}
+  .title .by{color:var(--gold);font-weight:700}
   .u{display:block;height:4px;width:100%;margin-top:5px;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold2) 22%,transparent 60%)}
   .hdr .right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}
   .live{display:flex;align-items:center;gap:8px;background:rgba(255,92,108,.10);border:1px solid rgba(255,92,108,.35);padding:4px 12px;border-radius:999px}
   .live .dot{width:9px;height:9px;border-radius:50%;background:var(--down);animation:pulse 1.6s infinite}
-  .live .txt{font-weight:800;letter-spacing:.12em;font-size:16px;color:#fff}
+  .live .txt{font-weight:600;letter-spacing:.12em;font-size:16px;color:#fff}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,108,.55)}70%{box-shadow:0 0 0 14px rgba(255,92,108,0)}100%{box-shadow:0 0 0 0 rgba(255,92,108,0)}}
-  .datebox{font-size:25px;font-weight:900;color:var(--gold)}
-  .clock{font-size:35px;font-weight:800;line-height:1}
-  .clock .z{color:var(--mu);font-size:15px;font-weight:800;margin-left:10px;letter-spacing:.08em}
-  .byline{font-size:16px;color:var(--mu);font-weight:800;margin-top:1px}
-  .byline b{color:var(--gold);font-weight:900;font-size:19px}
+  .datebox{font-size:25px;font-weight:700;color:var(--gold)}
+  .clock{font-size:35px;font-weight:600;line-height:1}
+  .clock .z{color:var(--mu);font-size:15px;font-weight:600;margin-left:10px;letter-spacing:.08em}
+  .byline{font-size:16px;color:var(--mu);font-weight:600;margin-top:1px}
+  .byline b{color:var(--gold);font-weight:700;font-size:19px}
 
   .body{display:grid;grid-template-columns:1fr 410px;gap:16px;flex:1;min-height:0;position:relative;z-index:2}
   .board{display:grid;grid-template-columns:1fr 1fr;gap:18px;min-height:0}
@@ -49,17 +54,17 @@
   .zone.real{background:radial-gradient(120% 80% at 50% -10%,rgba(255,194,75,.16),transparent 60%),linear-gradient(165deg,#33260C,#1B1206 72%);
     border:3px solid var(--real);box-shadow:0 0 60px rgba(255,194,75,.22)}
   .zone.demo{background:linear-gradient(165deg,#141C26,#0B121A 72%);border:3px solid rgba(91,114,135,.45)}
-  .zone .wm{position:absolute;font-weight:900;pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:.04em}
+  .zone .wm{position:absolute;font-weight:700;pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:.04em}
   .zone.real .wm{font-size:230px;color:rgba(255,194,75,.07);transform:rotate(-16deg);top:34%;left:-4%}
   .zone.demo .wm{font-size:200px;color:rgba(140,170,200,.085);transform:rotate(-16deg);top:30%;left:-6%}
   .zone>*{position:relative;z-index:1}
 
-  .zhead{display:flex;align-items:center;gap:12px;padding:8px 18px;border-radius:14px;font-weight:900}
+  .zhead{display:flex;align-items:center;gap:12px;padding:8px 18px;border-radius:14px;font-weight:700}
   .zhead .zic{font-size:25px;line-height:1}
   .zhead .zt{display:flex;flex-direction:column;gap:1px}
   .zhead .zk{font-size:34px;letter-spacing:.01em;line-height:1}
-  .zhead .ze{font-size:15px;font-weight:800;letter-spacing:.18em}
-  .zhead .zwarn{margin-left:auto;font-size:19px;font-weight:900;padding:5px 14px;border-radius:999px}
+  .zhead .ze{font-size:15px;font-weight:600;letter-spacing:.18em}
+  .zhead .zwarn{margin-left:auto;font-size:19px;font-weight:700;padding:5px 14px;border-radius:999px}
   .zone.real .zhead{background:linear-gradient(90deg,var(--real),var(--real2));color:#1B1206}
   .zone.real .zhead .ze{color:#4A340F}
   .zone.real .zhead .zwarn{background:rgba(27,18,6,.28);color:#1B1206;border:1px solid rgba(27,18,6,.35)}
@@ -85,18 +90,18 @@
      계좌명(.nm)은 flex 로 줄어들며 말줄임 처리되므로 깨지지 않는다. */
   .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}
   .acard .nm{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
-  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:900;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
+  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:700;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
   .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
-  .acard .tag{font-size:16px;font-size:10cqh;font-weight:900;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
+  .acard .tag{font-size:16px;font-size:10cqh;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
   .zone.real .tag{color:#1B1206;background:var(--real)}
   .zone.demo .tag{color:#9FB3C8;background:rgba(120,145,170,.16);border:1px solid rgba(120,145,170,.4)}
-  .acard .seedpill{font-size:24px;font-size:15cqh;font-weight:900;color:var(--mu);background:rgba(255,255,255,.05);
+  .acard .seedpill{font-size:24px;font-size:15cqh;font-weight:700;color:var(--mu);background:rgba(255,255,255,.05);
     border:1px solid var(--hair);border-radius:999px;padding:3px 14px;white-space:nowrap;line-height:1;flex:none}
   .acard .seedpill b{color:#fff}
 
   /* [크리 260713] 현재 보유 포지션 수 — 계좌명과 시드 사이. 실시간(3초 폴링).
      0개 = 조용히, 1개 이상 = 강조. 노출 상태가 한눈에 보이게. */
-  .acard .pospill{font-size:22px;font-size:14cqh;font-weight:900;color:var(--mu);
+  .acard .pospill{font-size:22px;font-size:14cqh;font-weight:700;color:var(--mu);
     background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
     padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
   .acard .pospill b{color:#fff}
@@ -112,7 +117,7 @@
   /* [크리 260714] 매매 착수 후 N주차 — 포지션 칩 왼쪽.
      서버가 config/strategy_start.json 을 읽어 매일 자동 갱신한다.
      가상매매 검증을 시작하면 '몇 주째 쌓였나'가 가장 중요한 숫자가 된다. */
-  .acard .weekpill{font-size:22px;font-size:14cqh;font-weight:900;color:var(--mu);
+  .acard .weekpill{font-size:22px;font-size:14cqh;font-weight:700;color:var(--mu);
     background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
     padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
   .acard .weekpill b{color:#fff}
@@ -121,9 +126,9 @@
      긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
   .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
   .acard .cell{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;min-width:0;overflow:hidden}
-  .acard .cell .ck{font-size:17px;font-size:11cqh;color:var(--mu);font-weight:800;line-height:1.1;
+  .acard .cell .ck{font-size:17px;font-size:11cqh;color:var(--mu);font-weight:600;line-height:1.1;
     flex:0 0 auto;max-width:42%;white-space:normal;word-break:keep-all}
-  .acard .cell .cv{font-size:38px;font-size:24cqh;font-weight:900;letter-spacing:-.01em;line-height:1.02;
+  .acard .cell .cv{font-size:38px;font-size:24cqh;font-weight:700;letter-spacing:-.01em;line-height:1.02;
     white-space:nowrap;flex:1 1 auto;min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis}
   .zone.real .cell .cv{color:#fff} .zone.demo .cell .cv{color:#C8D6E4}
   .acard .cell .cv.pos{color:var(--up)!important} .acard .cell .cv.neg{color:var(--down)!important} .acard .cell .cv.flat{color:var(--mu)!important}
@@ -131,8 +136,8 @@
   .empty{flex:1;min-height:0;container-type:size;padding:10px 16px;border:2.5px dashed rgba(255,194,75,.4);border-radius:16px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
     background:repeating-linear-gradient(45deg,rgba(255,194,75,.04),rgba(255,194,75,.04) 16px,transparent 16px,transparent 32px)}
-  .empty .e1{font-size:38px;font-size:27cqh;font-weight:900;color:var(--real);opacity:.9}
-  .empty .e2{font-size:18px;font-size:14cqh;font-weight:800;color:var(--mu)}
+  .empty .e1{font-size:38px;font-size:27cqh;font-weight:700;color:var(--real);opacity:.9}
+  .empty .e2{font-size:18px;font-size:14cqh;font-weight:600;color:var(--mu)}
   .zone.demo .empty{border-color:rgba(120,145,170,.42);
     background:repeating-linear-gradient(45deg,rgba(140,170,200,.045),rgba(140,170,200,.045) 16px,transparent 16px,transparent 32px)}
   .zone.demo .empty .e1{color:var(--demo)}
@@ -140,15 +145,15 @@
   .market{background:linear-gradient(180deg,var(--panel),var(--ink2));border:1px solid var(--hair);border-radius:16px;
     padding:20px 30px;display:flex;flex-direction:column;min-height:0}
   .market .mh{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-  .market .mh .t{font-size:32px;font-weight:900}
-  .market .mh .tf{font-size:18px;color:var(--gold);font-weight:800;border:1px solid rgba(232,182,90,.3);border-radius:8px;padding:4px 11px}
+  .market .mh .t{font-size:32px;font-weight:700}
+  .market .mh .tf{font-size:18px;color:var(--gold);font-weight:600;border:1px solid rgba(232,182,90,.3);border-radius:8px;padding:4px 11px}
   #mrows{flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:9px;margin-top:4px}
   .mrow{display:flex;flex-direction:column;gap:3px;padding:12px 20px;background:rgba(255,255,255,.035);
     border:1px solid var(--hair);border-left:4px solid var(--mu2);border-radius:12px}
   .mrow.up{border-left-color:var(--up)} .mrow.down{border-left-color:var(--down)}
-  .mrow .sym{font-size:31px;font-weight:900}
+  .mrow .sym{font-size:31px;font-weight:700}
   .mrow .rt{display:flex;align-items:baseline;gap:14px}
-  .mrow .px{font-size:31px;font-weight:800} .mrow .ch{font-size:26px;font-weight:900}
+  .mrow .px{font-size:31px;font-weight:600} .mrow .ch{font-size:26px;font-weight:700}
   .mrow.up .ch{color:var(--up)} .mrow.down .ch{color:var(--down)} .mrow.flat .ch{color:var(--mu)}
 </style>
 </head>
@@ -157,7 +162,7 @@
 
   <header class="hdr">
     <div class="left">
-      <div class="eyebrow"><span class="bar"></span>AUTOMATED OVERSEAS FUTURES · 데이터 08-05 10:20 KST (스냅샷)</div>
+      <div class="eyebrow"><span class="bar"></span>AUTOMATED OVERSEAS FUTURES<span id="eyeb"></span></div>
       <div class="title">해외선물 자동매매 실황 · 실전 &amp; 모의 <span class="by">by Pro-man</span></div>
       <span class="u"></span>
     </div>
@@ -202,8 +207,8 @@ var MAP = {
   acc06: {kind:"demo", row:1, label:"전략1호 · FxPro"},
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
-  acc11: {kind:"demo", row:4, label:"전략11호 · IC Markets"},
-  acc15: {kind:"demo", row:5, label:"전략12호 · Vantage"}
+  acc11: {kind:"demo", row:4, label:"전략11호 바둑판 · IC Markets"},
+  acc15: {kind:"demo", row:5, label:"전략12호 바둑판 · Vantage"}
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -271,6 +276,23 @@ function card(a){
 }
 
 function render(d){
+  /* [크리 260818] 눈썹줄의 '데이터 08-05 10:20 (스냅샷)' 은 HTML 에 박아둔
+     죽은 글자였다. 자료가 며칠 멈춰도 화면은 그대로라 거짓말을 한다.
+     실제 수신 시각을 그려주고, 대체표시로 떨어지면 그렇다고 말하게 한다. */
+  try{
+    var eb = document.getElementById('eyeb');
+    if(eb){
+      if(d && d.__demo){ eb.textContent = ' · 자료 없음 (대체표시)'; eb.style.color = '#FF6B6B'; }
+      else if(d && d.updated_at){
+        var t = new Date(String(d.updated_at).replace(' ','T'));
+        var mi = Math.floor((Date.now() - t.getTime())/60000);
+        var hh = String(t.getHours()).padStart(2,'0') + ':' + String(t.getMinutes()).padStart(2,'0');
+        var mm = String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
+        eb.textContent = ' · 자료 ' + mm + ' ' + hh + ' KST' + (mi > 30 ? ' (' + mi + '분 지연)' : '');
+        eb.style.color = mi > 30 ? '#FF6B6B' : '';
+      } else { eb.textContent = ''; eb.style.color = ''; }
+    }
+  }catch(e){}
   var cells = {};
   (d.accounts || []).forEach(function(a){
     var m = MAP[a.acc];
@@ -312,7 +334,7 @@ function poll(){
   fetch('/api/state', {cache:'no-store'})
     .then(function(r){ if(!r.ok) throw 0; return r.json(); })
     .then(function(d){ if(!d.accounts || !d.accounts.length) throw 0; render(d); })
-    .catch(function(){ render(DEMO); });
+    .catch(function(){ var x = Object.assign({}, DEMO, {__demo:1}); render(x); });
 }
 
 function fit(){
