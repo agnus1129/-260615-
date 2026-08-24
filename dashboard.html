@@ -223,7 +223,12 @@ var MAP = {
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
 //   예) "real-4": {kind:"real", status:"pending", label:"아테나", sub:"입금 대기"}
-var PEND = {};
+var PEND = {
+  // [크리 260824 S160] 주인님 지시 — 실전 4번칸에 새 계좌(아테나) 자리를 만든다.
+  //   전용 터미널이 아직 없어 숫자를 못 읽는다. 터미널이 붙고 accounts.json 에
+  //   등록되면 이 항목을 지우고 MAP 에 {kind:"real", row:4} 로 옮긴다.
+  "real-4": {kind:"real", status:"pending", label:"아테나 · Vantage", sub:"터미널 연결 대기"}
+};
 
 var DEMO = {accounts:[
   {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0},
