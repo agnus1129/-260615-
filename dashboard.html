@@ -1,8 +1,14 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" translate="no" class="notranslate">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- [크리 260824 S149c] 브라우저 자동번역 차단.
+     크롬이 이 판을 번역하면서 HANGSENG 을 "매달린 노래" 로,
+     $16,143.40 을 "16,143.40달러" 로 바꿔놨다. 게다가 3초마다
+     카드를 다시 그리니 번역기가 매번 다시 달라붙어 화면이 흔들렸다.
+     방송용 판에서 종목명과 금액이 번역되면 그건 그냥 오표기다. -->
+<meta name="google" content="notranslate">
 <title>해외선물 자동매매 실황 · 실전 &amp; 모의 · Pro-man</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,6 +136,10 @@
     flex:0 0 auto;max-width:42%;white-space:normal;word-break:keep-all}
   .acard .cell .cv{font-size:38px;font-size:24cqh;font-weight:700;letter-spacing:-.01em;line-height:1.02;
     white-space:nowrap;flex:1 1 auto;min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis}
+  /* [크리 260824 S149b] 금액이 길면 잘리지 말고 작아져라.
+     '$16,143.40' 처럼 열 글자를 넘으면 cvsm/cvxs 등급이 붙는다. */
+  .acard .cell .cv.cvsm{font-size:20cqh;letter-spacing:-.02em}
+  .acard .cell .cv.cvxs{font-size:17cqh;letter-spacing:-.03em}
   .zone.real .cell .cv{color:#fff} .zone.demo .cell .cv{color:#C8D6E4}
   .acard .cell .cv.pos{color:var(--up)!important} .acard .cell .cv.neg{color:var(--down)!important} .acard .cell .cv.flat{color:var(--mu)!important}
 
@@ -207,8 +217,8 @@ var MAP = {
   acc06: {kind:"demo", row:1, label:"전략1호 · FxPro"},
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
-  acc11: {kind:"demo", row:4, label:"전략11호 바둑판 · IC Markets"},
-  acc15: {kind:"demo", row:5, label:"전략12호 바둑판 · Vantage"}
+  acc11: {kind:"demo", row:4, label:"전략11호 · IC Markets"},
+  acc15: {kind:"demo", row:5, label:"전략12호 · Vantage"}
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -239,6 +249,15 @@ function sgn(n){ return n>0?'+':(n<0?'−':''); }
 function cls(n){ return n>0?'pos':(n<0?'neg':'flat'); }
 function arr(n){ return n>0?'▲':(n<0?'▼':'■'); }
 
+/* [크리 260824 S149b] 금액 한 칸. 길면 글자 등급을 낮춰 '...' 로 잘리는 걸 막는다. */
+function money(v){
+  var s = '$' + fmt(v);
+  /* 실측: '$2,253.94'=9  '$16,143.40'=10  '$123,456.78'=11.
+     화면에서 잘린 건 10글자부터였다. 그 자리에서 등급을 낮춘다. */
+  var g = s.length >= 11 ? ' cvxs' : (s.length >= 10 ? ' cvsm' : '');
+  return '<div class="cv mono notranslate' + g + '" translate="no">' + s + '</div>';
+}
+
 function card(a){
   if(!a){
     return '<div class="empty"><div class="e1">— 빈 슬롯 —</div><div class="e2">계좌 배정 대기</div></div>';
@@ -267,8 +286,8 @@ function card(a){
     +   '<span class="seedpill mono">시드 <b>$'+fmt(seed,0)+'</b></span>'
     + '</div>'
     + '<div class="grid4">'
-    +   '<div class="cell"><div class="ck">현재 잔고</div><div class="cv mono">$'+fmt(bal)+'</div></div>'
-    +   '<div class="cell"><div class="ck">평가 잔고</div><div class="cv mono">$'+fmt(eq)+'</div></div>'
+    +   '<div class="cell"><div class="ck">현재 잔고</div>'+money(bal)+'</div>'
+    +   '<div class="cell"><div class="ck">평가 잔고</div>'+money(eq)+'</div>'
     +   '<div class="cell"><div class="ck">누적 확정 수익률</div><div class="cv mono '+cls(rp)+'">'+sgn(rp)+fmt(Math.abs(rp))+'%</div></div>'
     +   '<div class="cell"><div class="ck">누적 평가 수익률</div><div class="cv mono '+cls(vp)+'">'+sgn(vp)+fmt(Math.abs(vp))+'%</div></div>'
     + '</div>'
@@ -282,7 +301,13 @@ function render(d){
   try{
     var eb = document.getElementById('eyeb');
     if(eb){
-      if(d && d.__demo){ eb.textContent = ' · 자료 없음 (대체표시)'; eb.style.color = '#FF6B6B'; }
+      if(d && d.__stale){ eb.textContent = ' · 서버 응답 없음 ' + d.__stale
+            + '회 — 마지막 정상 자료를 그대로 두고 있습니다';
+          eb.style.color = '#FFC24B'; }
+      else if(d && d.__waiting){ eb.textContent = ' · 서버 연결 대기 ' + d.__waiting + '회';
+          eb.style.color = '#FF6B6B'; }
+      else if(d && d.__demo){ eb.textContent = ' · 미리보기(가짜 자료) — ?demo=1';
+          eb.style.color = '#FF6B6B'; }
       else if(d && d.updated_at){
         var t = new Date(String(d.updated_at).replace(' ','T'));
         var mi = Math.floor((Date.now() - t.getTime())/60000);
@@ -311,7 +336,8 @@ function render(d){
   m.innerHTML = '';
   (d.brief || []).forEach(function(s){
     var row = document.createElement('div');
-    row.className = 'mrow ' + cls(s.pct);
+    row.className = 'mrow notranslate ' + cls(s.pct);
+    row.setAttribute('translate','no');
     row.innerHTML = '<span class="sym">'+s.name+'</span>'
       + '<span class="rt"><span class="px mono">'+fmt(s.price, (s.digits===undefined?2:s.digits))+'</span>'
       + '<span class="ch mono">'+arr(s.pct)+' '+sgn(s.pct)+fmt(Math.abs(s.pct))+'%</span></span>';
@@ -330,11 +356,24 @@ function tick(){
     + String(k.getDate()).padStart(2,'0') + ' (' + WD[k.getDay()] + ')';
 }
 
+/* [크리 260824 S149] 실패해도 가짜 자료를 그리지 않는다.
+   전: .catch(...) 에서 HTML 에 박아둔 DEMO 를 그렸다. 3초마다 성공/실패가
+       갈리면 진짜값($2,253)과 가짜값($2,000)이 번갈아 나와 화면이 흔들린다.
+       방송판에 가짜 숫자를 진짜인 척 띄우는 것 자체가 사고다.
+   후: 마지막 정상 자료를 유지하고, 눈썹줄에 몇 번 실패했는지 정직하게 적는다. */
+var LAST = null, FAILS = 0;
+var DEMO_MODE = (location.search.indexOf('demo=1') >= 0);
 function poll(){
   fetch('/api/state', {cache:'no-store'})
     .then(function(r){ if(!r.ok) throw 0; return r.json(); })
-    .then(function(d){ if(!d.accounts || !d.accounts.length) throw 0; render(d); })
-    .catch(function(){ var x = Object.assign({}, DEMO, {__demo:1}); render(x); });
+    .then(function(d){ if(!d.accounts || !d.accounts.length) throw 0;
+                       LAST = d; FAILS = 0; render(d); })
+    .catch(function(){
+      FAILS++;
+      if(LAST){ render(Object.assign({}, LAST, {__stale:FAILS})); return; }
+      if(DEMO_MODE){ render(Object.assign({}, DEMO, {__demo:1})); return; }
+      render({accounts:[], brief:[], __waiting:FAILS});
+    });
 }
 
 function fit(){
