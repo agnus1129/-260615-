@@ -214,6 +214,7 @@ var MAP = {
   acc10: {kind:"real", row:1, label:"제우스 · Vantage"},
   acc09: {kind:"real", row:2, label:"하데스 · Vantage"},
   acc02: {kind:"real", row:3, label:"포세이돈 · FxPro"},
+  acc14: {kind:"real", row:4, label:"아테나 · Vantage"},
   acc06: {kind:"demo", row:1, label:"전략1호 · FxPro"},
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
@@ -227,12 +228,12 @@ var PEND = {
   // [크리 260824 S160] 주인님 지시 — 실전 4번칸에 새 계좌(아테나) 자리를 만든다.
   //   전용 터미널이 아직 없어 숫자를 못 읽는다. 터미널이 붙고 accounts.json 에
   //   등록되면 이 항목을 지우고 MAP 에 {kind:"real", row:4} 로 옮긴다.
-  "real-4": {kind:"real", status:"pending", label:"아테나 · Vantage", sub:"터미널 연결 대기"}
 };
 
 var DEMO = {accounts:[
   {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0},
   {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7},
+  {acc:"acc14", seed:2000,  equity:2000.00,  balance:2000.00, positions:0},
   {acc:"acc02", seed:58,    equity:97.05,    balance:98.60,   positions:2},
   {acc:"acc06", seed:10000, equity:16831.85, balance:16465.79,positions:6},
   {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0},
