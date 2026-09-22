@@ -215,7 +215,7 @@ var MAP = {
   acc09: {kind:"real", row:2, label:"하데스 · Vantage"},
   acc02: {kind:"real", row:3, label:"포세이돈 · FxPro"},
   acc14: {kind:"real", row:4, label:"아테나 · Vantage"},
-  acc06: {kind:"demo", row:1, label:"전략1호 · FxPro"},
+  acc06: {kind:"demo", row:1, label:"전략1호 · Vantage"},
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
   acc11: {kind:"demo", row:4, label:"전략11호 · IC Markets"},
@@ -231,15 +231,15 @@ var PEND = {
 };
 
 var DEMO = {accounts:[
-  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0},
-  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7},
-  {acc:"acc14", seed:2000,  equity:2000.00,  balance:2000.00, positions:0},
-  {acc:"acc02", seed:58,    equity:97.05,    balance:98.60,   positions:2},
-  {acc:"acc06", seed:10000, equity:16831.85, balance:16465.79,positions:6},
-  {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0},
-  {acc:"acc12", seed:3000,  equity:2995.16,  balance:2995.16, positions:0},
-  {acc:"acc11", seed:2000,  equity:2034.00,  balance:2034.00, positions:0},
-  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0}
+  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0, week:3},
+  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7, week:5},
+  {acc:"acc14", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1},
+  {acc:"acc02", seed:58,    equity:97.05,    balance:98.60,   positions:2, week:6},
+  {acc:"acc06", seed:10000, equity:16831.85, balance:16465.79,positions:6, week:8},
+  {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0, week:1},
+  {acc:"acc12", seed:3000,  equity:2995.16,  balance:2995.16, positions:0, week:1},
+  {acc:"acc11", seed:2000,  equity:2034.00,  balance:2034.00, positions:0, week:1},
+  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1}
 ], brief:[
   {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
   {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
@@ -328,7 +328,12 @@ function render(d){
   (d.accounts || []).forEach(function(a){
     var m = MAP[a.acc];
     if(!m) return;
-    cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:m.label, kind:m.kind, status:'live'});
+    // [크리 260922 S268] 브로커명은 accounts.json 이 정본이다. MAP 라벨은 별명만 쓰고
+    //   ' \u00b7 브로커' 는 받은 자료의 broker 값으로 붙인다.
+    //   이렇게 해두면 계좌를 옮겨도 깃허브에 다시 올릴 필요가 없다.
+    var nick = String(m.label).split(' \u00b7 ')[0];
+    var lab  = a.broker ? (nick + ' \u00b7 ' + a.broker) : m.label;
+    cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:lab, kind:m.kind, status:'live'});
   });
   var R = '', M = '';
   for(var r = 1; r <= ROWS; r++){
