@@ -219,7 +219,11 @@ var MAP = {
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
   acc11: {kind:"demo", row:4, label:"전략11호 · IC Markets"},
-  acc15: {kind:"demo", row:5, label:"전략12호 · Vantage"}
+  acc15: {kind:"demo", row:5, label:"전략12호 · Vantage"},
+  // [크리 261016 S835] 주인님 지시 "좌측 실전계좌 맨 아래칸에 새로 넣자".
+  //   데모 칸(1~5)은 꽉 차 있고 비어 있는 자리가 real-5 하나뿐이라 거기에 넣는다.
+  //   ★실제로는 데모다 — 헷갈리지 않게 라벨에 "데모"를 적어 둔다.
+  acc16: {kind:"real", row:5, label:"전략13호(눈2개) · Vantage 데모"}
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -239,7 +243,8 @@ var DEMO = {accounts:[
   {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0, week:1},
   {acc:"acc12", seed:3000,  equity:2995.16,  balance:2995.16, positions:0, week:1},
   {acc:"acc11", seed:2000,  equity:2034.00,  balance:2034.00, positions:0, week:1},
-  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1}
+  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1},
+  {acc:"acc16", seed:0,     equity:0.00,     balance:0.00,    positions:0, week:1}
 ], brief:[
   {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
   {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
