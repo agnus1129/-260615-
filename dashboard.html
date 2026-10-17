@@ -120,6 +120,24 @@
     border-color:rgba(140,170,200,.45)}
   .zone.demo .acard .pospill.on b{color:#D2E2F0}
 
+  /* ─── [크리 261017 S874] 실전 칸에 앉은 '모의' 계좌 — 색만 모의로 ───
+     왜: 데모 칸(1~5)이 꽉 차서 전략13호를 real-5 자리에 넣었는데(S835),
+         그 자리에 앉으면 .zone.real 색(황금)이 입혀져 실전처럼 보인다.
+         주인님 지시 261017 "모의가 6개야 … 그걸 모의 컬러로 바꿔줘".
+     어떻게: MAP 에 demoLook:true 를 적으면 카드에 .asdemo 가 붙고
+             아래 규칙이 .zone.demo 와 똑같은 색으로 되돌린다. 자리는 그대로.
+     되돌리기: MAP 의 demoLook 줄 삭제 (CSS 는 남아도 무해) */
+  .zone.real .acard.asdemo{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(0,0,0,.28));
+    border:2px solid rgba(91,114,135,.32)}
+  .zone.real .acard.asdemo .accent{background:linear-gradient(180deg,var(--demo),var(--demo2))}
+  .zone.real .acard.asdemo .name{color:#DCE7F2}
+  .zone.real .acard.asdemo .tag{color:#9FB3C8;background:rgba(120,145,170,.16);
+    border:1px solid rgba(120,145,170,.4)}
+  .zone.real .acard.asdemo .pospill.on{color:#A9C0D6;background:rgba(140,170,200,.10);
+    border-color:rgba(140,170,200,.45)}
+  .zone.real .acard.asdemo .pospill.on b{color:#D2E2F0}
+  .zone.real .acard.asdemo .cell .cv{color:#C8D6E4}
+
   /* [크리 260714] 매매 착수 후 N주차 — 포지션 칩 왼쪽.
      서버가 config/strategy_start.json 을 읽어 매일 자동 갱신한다.
      가상매매 검증을 시작하면 '몇 주째 쌓였나'가 가장 중요한 숫자가 된다. */
@@ -223,7 +241,7 @@ var MAP = {
   // [크리 261016 S835] 주인님 지시 "좌측 실전계좌 맨 아래칸에 새로 넣자".
   //   데모 칸(1~5)은 꽉 차 있고 비어 있는 자리가 real-5 하나뿐이라 거기에 넣는다.
   //   ★실제로는 데모다 — 헷갈리지 않게 라벨에 "데모"를 적어 둔다.
-  acc16: {kind:"real", row:5, label:"전략13호(눈2개) · Vantage 데모"}
+  acc16: {kind:"real", row:5, label:"전략13호(눈2개) · Vantage 데모", demoLook:true}
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -279,7 +297,9 @@ function card(a){
   var seed = +a.seed || 0, bal = +a.balance || 0, eq = +a.equity || 0;
   var rp = seed ? (bal-seed)/seed*100 : 0;   // 확정 수익률 = (잔고-시드)/시드
   var vp = seed ? (eq -seed)/seed*100 : 0;   // 평가 수익률 = (평가-시드)/시드
-  var tag = (a.kind === 'real') ? '⚡ 실전' : '🧪 모의';
+  // [크리 261017 S874] demoLook 이면 자리는 실전 칸이어도 '모의'로 보인다
+  var asDemo = !!a.demoLook;
+  var tag = (a.kind === 'real' && !asDemo) ? '⚡ 실전' : '🧪 모의';
   // [크리 260713] 계좌명과 시드 사이에 '현재 보유 포지션 수' 실시간 표시.
   //   0개면 조용히(muted), 1개 이상이면 강조(on) — 한눈에 노출 상태가 보이게.
   var pos = (a.positions === undefined || a.positions === null) ? 0 : (+a.positions);
@@ -289,7 +309,7 @@ function card(a){
   var wk = (a.week === undefined || a.week === null) ? null : (+a.week);
   var wkHtml = (wk === null) ? ''
     : '<span class="weekpill mono"><b>'+wk+'</b>주차</span>';
-  return '<div class="acard"><div class="accent"></div><div class="cin">'
+  return '<div class="acard'+(asDemo?' asdemo':'')+'"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span></div>'
     +   wkHtml
@@ -338,7 +358,8 @@ function render(d){
     //   이렇게 해두면 계좌를 옮겨도 깃허브에 다시 올릴 필요가 없다.
     var nick = String(m.label).split(' \u00b7 ')[0];
     var lab  = a.broker ? (nick + ' \u00b7 ' + a.broker) : m.label;
-    cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:lab, kind:m.kind, status:'live'});
+    cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:lab, kind:m.kind, status:'live',
+                                                     demoLook: !!m.demoLook});   // [S874]
   });
   var R = '', M = '';
   for(var r = 1; r <= ROWS; r++){
