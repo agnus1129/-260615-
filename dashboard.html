@@ -80,6 +80,12 @@
 
   .zcards{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
 
+  /* [크리 261017 S878] 왼쪽 열 = 실전 테두리 4칸 + 테두리 밖 1칸(전략13호).
+     4:1 로 높이를 나눠 오른쪽 5칸과 칸 크기가 같아진다. gap 18px 은 .board 와 맞춤. */
+  .realcol{display:flex;flex-direction:column;gap:18px;min-height:0}
+  .realcol .zone.real{flex:4;min-height:0}
+  .realcol .zone.demo.solo{flex:1;min-height:0;padding:9px 11px}
+
   /* [크리 260711] 5행 그리드.
      - 카드 글자: container query(cqh) = 카드 높이 비례 → 행 수 바뀌어도 자동 맞춤.
      - 카드 여백: .cin 래퍼에 px 고정 (cq 단위는 자기 자신에 안 먹어서 px 로 확실히). */
@@ -204,10 +210,16 @@
 
   <section class="body">
     <div class="board">
-      <div class="zone real">
-        <div class="wm">REAL ₩</div>
-        <div class="zhead"><span class="zic">⚡</span><div class="zt"><div class="zk">실전계좌</div><div class="ze">REAL · LIVE MONEY</div></div><span class="zwarn">실제 자금</span></div>
-        <div class="zcards" id="realCards"></div>
+      <!-- [크리 261017 S878] 왼쪽 열 = 실전 테두리(4칸) + 테두리 밖 1칸.
+           주인님 지시 "5개씩 두줄로 원래대로 하고 실전만 4개로 묶고 13호는 그대로".
+           칸 높이는 오른쪽(5칸)과 같게 flex 4:1 로 나눈다 — 글자는 cqh 라 저절로 맞는다. -->
+      <div class="realcol">
+        <div class="zone real">
+          <div class="wm">REAL ₩</div>
+          <div class="zhead"><span class="zic">⚡</span><div class="zt"><div class="zk">실전계좌</div><div class="ze">REAL · LIVE MONEY</div></div><span class="zwarn">실제 자금</span></div>
+          <div class="zcards" id="realCards"></div>
+        </div>
+        <div class="zone demo solo"><div class="zcards" id="outCards"></div></div>
       </div>
       <div class="zone demo">
         <div class="wm">DEMO</div>
@@ -230,8 +242,8 @@
 //   전략13호는 밴티지 **데모**인데 '실전계좌' 박스 안에 앉아 있어 오해를 샀다(S835 때 데모 칸이 꽉 차서).
 //   → 실전 4칸 · 데모 6칸으로 나눈다. 전략13호는 데모 박스로 들어간다.
 //   되돌리기: 아래 두 줄을 var ROWS = 5; 로 되돌리고 acc16 을 kind:"real", row:5 로.
-var ROWS_REAL = 4;
-var ROWS_DEMO = 6;
+var ROWS_REAL = 4;   // 실전 테두리 안
+var ROWS_DEMO = 5;   // 오른쪽 — 원래대로
 
 var MAP = {
   acc10: {kind:"real", row:1, label:"제우스 · Vantage"},
@@ -246,7 +258,7 @@ var MAP = {
   // [크리 261016 S835] 주인님 지시 "좌측 실전계좌 맨 아래칸에 새로 넣자".
   //   데모 칸(1~5)은 꽉 차 있고 비어 있는 자리가 real-5 하나뿐이라 거기에 넣는다.
   //   ★실제로는 데모다 — 헷갈리지 않게 라벨에 "데모"를 적어 둔다.
-  acc16: {kind:"demo", row:6, label:"전략13호(눈2개) · Vantage"}
+  acc16: {kind:"solo", row:1, label:"전략13호(눈2개) · Vantage"}   // 테두리 밖
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -369,6 +381,7 @@ function render(d){
   var R = '', M = '';
   for(var r = 1; r <= ROWS_REAL; r++){ R += card(cells['real-'+r] || PEND['real-'+r] || null); }
   for(var r = 1; r <= ROWS_DEMO; r++){ M += card(cells['demo-'+r] || PEND['demo-'+r] || null); }
+  var O = $('#outCards'); if(O){ O.innerHTML = card(cells['solo-1'] || null); }   // [S878]
   $('#realCards').innerHTML = R;
   $('#demoCards').innerHTML = M;
 
