@@ -101,19 +101,19 @@
   /* [크리 260713] 포지션 칩이 추가돼 가로가 빡빡해짐 → 간격을 조여 자리를 만든다.
      계좌명(.nm)은 flex 로 줄어들며 말줄임 처리되므로 깨지지 않는다. */
   .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}
-  .acard .nm{display:flex;align-items:center;gap:7px;flex:1 1 auto;min-width:0;overflow:hidden}
-  .acard .name{font-size:19px;font-size:11cqh;font-weight:700;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
+  .acard .nm{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
+  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:700;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
   .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
-  .acard .tag{font-size:14px;font-size:8.5cqh;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
+  .acard .tag{font-size:16px;font-size:10cqh;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
   .zone.real .tag{color:#1B1206;background:var(--real)}
   .zone.demo .tag{color:#9FB3C8;background:rgba(120,145,170,.16);border:1px solid rgba(120,145,170,.4)}
-  .acard .seedpill{font-size:20px;font-size:12.5cqh;font-weight:700;color:var(--mu);background:rgba(255,255,255,.05);
+  .acard .seedpill{font-size:24px;font-size:15cqh;font-weight:700;color:var(--mu);background:rgba(255,255,255,.05);
     border:1px solid var(--hair);border-radius:999px;padding:3px 14px;white-space:nowrap;line-height:1;flex:none}
   .acard .seedpill b{color:#fff}
 
   /* [크리 260713] 현재 보유 포지션 수 — 계좌명과 시드 사이. 실시간(3초 폴링).
      0개 = 조용히, 1개 이상 = 강조. 노출 상태가 한눈에 보이게. */
-  .acard .pospill{font-size:19px;font-size:12cqh;font-weight:700;color:var(--mu);
+  .acard .pospill{font-size:22px;font-size:14cqh;font-weight:700;color:var(--mu);
     background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
     padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
   .acard .pospill b{color:#fff}
@@ -147,7 +147,7 @@
   /* [크리 260714] 매매 착수 후 N주차 — 포지션 칩 왼쪽.
      서버가 config/strategy_start.json 을 읽어 매일 자동 갱신한다.
      가상매매 검증을 시작하면 '몇 주째 쌓였나'가 가장 중요한 숫자가 된다. */
-  .acard .weekpill{font-size:19px;font-size:12cqh;font-weight:700;color:var(--mu);
+  .acard .weekpill{font-size:22px;font-size:14cqh;font-weight:700;color:var(--mu);
     background:rgba(255,255,255,.05);border:1px solid var(--hair);border-radius:999px;
     padding:3px 13px;white-space:nowrap;line-height:1;flex:none}
   .acard .weekpill b{color:#fff}
@@ -156,14 +156,14 @@
      긴 이름표(누적 확정 수익률)는 두 줄로 자연스럽게 접힌다. */
   .acard .grid4{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
   .acard .cell{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:10px;min-width:0;overflow:hidden}
-  .acard .cell .ck{font-size:15px;font-size:9.5cqh;color:var(--mu);font-weight:600;line-height:1.1;
+  .acard .cell .ck{font-size:17px;font-size:11cqh;color:var(--mu);font-weight:600;line-height:1.1;
     flex:0 0 auto;max-width:42%;white-space:normal;word-break:keep-all}
-  .acard .cell .cv{font-size:33px;font-size:21cqh;font-weight:700;letter-spacing:-.01em;line-height:1.02;
+  .acard .cell .cv{font-size:38px;font-size:24cqh;font-weight:700;letter-spacing:-.01em;line-height:1.02;
     white-space:nowrap;flex:1 1 auto;min-width:0;text-align:right;overflow:hidden;text-overflow:ellipsis}
   /* [크리 260824 S149b] 금액이 길면 잘리지 말고 작아져라.
      '$16,143.40' 처럼 열 글자를 넘으면 cvsm/cvxs 등급이 붙는다. */
-  .acard .cell .cv.cvsm{font-size:17.5cqh;letter-spacing:-.02em}
-  .acard .cell .cv.cvxs{font-size:15cqh;letter-spacing:-.03em}
+  .acard .cell .cv.cvsm{font-size:20cqh;letter-spacing:-.02em}
+  .acard .cell .cv.cvxs{font-size:17cqh;letter-spacing:-.03em}
   .zone.real .cell .cv{color:#fff} .zone.demo .cell .cv{color:#C8D6E4}
   .acard .cell .cv.pos{color:var(--up)!important} .acard .cell .cv.neg{color:var(--down)!important} .acard .cell .cv.flat{color:var(--mu)!important}
 
@@ -189,6 +189,19 @@
   .mrow .rt{display:flex;align-items:baseline;gap:14px}
   .mrow .px{font-size:31px;font-weight:600} .mrow .ch{font-size:26px;font-weight:700}
   .mrow.up .ch{color:var(--up)} .mrow.down .ch{color:var(--down)} .mrow.flat .ch{color:var(--mu)}
+
+  /* ─── [크리 261019 S950] 전략13호 칸 하나만 ───────────────────────────
+     이 칸은 테두리 밖 작은 자리(flex:1)에 혼자 앉아 있다. 칸이 낮은데
+     이름·꼬리표·시드·자리·주간이 한 줄에 다 들어가려 해서 브로커 이름이 잘렸다.
+     그래서 **이 칸 안에서만** 글씨를 한 단 줄인다. 다른 칸은 손대지 않는다.
+     (261019 07:4x 에 전체를 줄였다가 주인님 지적 — "전략13호만 건드리라고 했는데") */
+  .zone.demo.solo .acard .name{font-size:18px;font-size:10cqh}
+  .zone.demo.solo .acard .tag{font-size:13px;font-size:7.5cqh;padding:3px 8px}
+  .zone.demo.solo .acard .seedpill{font-size:17px;font-size:10cqh}
+  .zone.demo.solo .acard .pospill,
+  .zone.demo.solo .acard .weekpill,
+  .zone.demo.solo .acard .stalepill{font-size:16px;font-size:9.5cqh}
+  .zone.demo.solo .acard .chead{gap:6px}
 </style>
 </head>
 <body>
