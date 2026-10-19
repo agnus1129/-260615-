@@ -101,8 +101,24 @@
   /* [크리 260713] 포지션 칩이 추가돼 가로가 빡빡해짐 → 간격을 조여 자리를 만든다.
      계좌명(.nm)은 flex 로 줄어들며 말줄임 처리되므로 깨지지 않는다. */
   .acard .chead{display:flex;align-items:center;justify-content:space-between;gap:9px;min-width:0}
-  .acard .nm{display:flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
-  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:700;white-space:nowrap;line-height:1;overflow:hidden;text-overflow:ellipsis}
+  .acard .nm{display:flex;align-items:baseline;gap:8px;flex:1 1 auto;min-width:0;overflow:hidden}
+  /* [크리 261019 S941] 주인님 지시 ①"전략00호와 브로커명 사이에 종목을 넣자(1종목만 도는 1·9·10·13호)"
+     ②"1행 간격을 잘 조정해 시인성·가독성이 떨어지지 않게 — 두 번 손 안 대게".
+     고친 생각: 글자를 똑같이 줄이면 다 같이 안 보인다. **중요한 순서대로 크기를 준다.**
+       별명(누구) > 종목(무엇) > 브로커(어디)   ← 브로커가 제일 안 중요한데 전엔 별명과 같은 크기였다
+     그래서 별명은 13.5cqh 로 되돌리고, 종목은 금색 0.80em, 브로커는 0.74em·흐리게로 내렸다.
+     ★[메모리 규칙 261019] "칸 글씨 크기는 전역값(이름 13.5cqh)을 건드리지 않는다" —
+     알약(시드·포지션·주차)과 간격은 **원래대로 두었다**. 자리는 브로커 글씨를 낮춰서 만든다. */
+  .acard .name{font-size:23px;font-size:13.5cqh;font-weight:700;white-space:nowrap;line-height:1;letter-spacing:-.008em;overflow:hidden;text-overflow:ellipsis}
+  .acard .name .syml{font-style:normal;font-weight:700;font-size:.80em;letter-spacing:.01em;color:var(--gold);opacity:.95;padding:0 .14em}
+  .acard .name .brk{font-style:normal;font-weight:600;font-size:.74em;letter-spacing:0;color:var(--mu);opacity:.85}
+  /* [크리 261019 S941] ★메모리 규칙대로 — 전역을 건드리지 않고 **종목이 붙은 칸만** 알약을 한 단 양보시킨다.
+     (261019 에 두 번 틀렸던 자리: 전체 글씨를 줄여 "다 작아졌잖아" 소리를 들었다. 같은 실수 금지)
+     실측: 알약을 원래 크기로 두면 1·9·10·13호 네 칸이 전부 말줄임(…)이 났다 → 그 네 칸만 줄인다. */
+  .acard.withsym .chead{gap:7px}
+  .acard.withsym .seedpill{font-size:21px;font-size:13.2cqh;padding:3px 11px}
+  .acard.withsym .pospill,
+  .acard.withsym .weekpill{font-size:20px;font-size:12.6cqh}
   .zone.real .name{color:#fff} .zone.demo .name{color:#DCE7F2}
   .acard .tag{font-size:16px;font-size:10cqh;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:999px;white-space:nowrap;flex:none}
   .zone.real .tag{color:#1B1206;background:var(--real)}
@@ -202,6 +218,13 @@
   .zone.demo.solo .acard .tag{font-size:15px;font-size:9.6cqh;padding:4px 9px}
   .zone.demo.solo .acard .chead{gap:7px}
   .zone.demo.solo .acard .nm{flex:1 1 60%}
+  /* [크리 261019 S941] 솔로 칸(전략13호)은 위 solo 규칙이 더 구체적이라 withsym 을 눌러 버린다.
+     실측으로 잡았다 — 솔로 칸만 아직 말줄임이 났다. 그래서 같은 구체성으로 한 단 더 양보시킨다. */
+  .zone.demo.solo .acard.withsym .seedpill,
+  .zone.demo.solo .acard.withsym .pospill,
+  .zone.demo.solo .acard.withsym .weekpill{font-size:18px;font-size:11.4cqh;padding:3px 9px}
+  .zone.demo.solo .acard.withsym .chead{gap:6px}
+  .zone.demo.solo .acard.withsym .nm{flex:1 1 68%}
 </style>
 </head>
 <body>
@@ -263,15 +286,15 @@ var MAP = {
   acc09: {kind:"real", row:2, label:"하데스 · Vantage"},
   acc02: {kind:"real", row:3, label:"포세이돈 · FxPro"},
   acc14: {kind:"real", row:4, label:"아테나 · Vantage"},
-  acc06: {kind:"demo", row:1, label:"전략1호 · Vantage"},
-  acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets"},
-  acc12: {kind:"demo", row:3, label:"전략10호 · Vantage"},
+  acc06: {kind:"demo", row:1, label:"전략1호 · Vantage", sym:"GOLD H1"},
+  acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets", sym:"WTI H1"},
+  acc12: {kind:"demo", row:3, label:"전략10호 · Vantage", sym:"GOLD H1"},
   acc11: {kind:"demo", row:4, label:"전략11호 · IC Markets"},
   acc15: {kind:"demo", row:5, label:"전략12호 · Vantage"},
   // [크리 261016 S835] 주인님 지시 "좌측 실전계좌 맨 아래칸에 새로 넣자".
   //   데모 칸(1~5)은 꽉 차 있고 비어 있는 자리가 real-5 하나뿐이라 거기에 넣는다.
   //   ★실제로는 데모다 — 헷갈리지 않게 라벨에 "데모"를 적어 둔다.
-  acc16: {kind:"solo", row:1, label:"전략13호 · Vantage"}   // 테두리 밖
+  acc16: {kind:"solo", row:1, label:"전략13호 · Vantage", sym:"GOLD H1"}   // 테두리 밖
 };
 
 // 미연결 계좌 자리표시. 지금은 전부 연결됨.
@@ -339,7 +362,7 @@ function card(a){
   var wk = (a.week === undefined || a.week === null) ? null : (+a.week);
   var wkHtml = (wk === null) ? ''
     : '<span class="weekpill mono"><b>'+wk+'</b>주차</span>';
-  return '<div class="acard'+(asDemo?' asdemo':'')+'"><div class="accent"></div><div class="cin">'
+  return '<div class="acard'+(asDemo?' asdemo':'')+(a.hasSym?' withsym':'')+'"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span></div>'
     +   wkHtml
@@ -387,8 +410,12 @@ function render(d){
     //   ' \u00b7 브로커' 는 받은 자료의 broker 값으로 붙인다.
     //   이렇게 해두면 계좌를 옮겨도 깃허브에 다시 올릴 필요가 없다.
     var nick = String(m.label).split(' \u00b7 ')[0];
-    var lab  = a.broker ? (nick + ' \u00b7 ' + a.broker) : m.label;
+    // [크리 261019 S941] 1종목만 도는 전략은 별명과 브로커 사이에 종목을 끼운다(MAP 의 sym).
+    var sy   = m.sym ? ('<i class="syml">\u00b7 ' + m.sym + '</i>') : '';
+    var bk   = a.broker ? ('<i class="brk">\u00b7 ' + a.broker + '</i>') : '';
+    var lab  = (a.broker || m.sym) ? (nick + ' ' + sy + ' ' + bk) : m.label;
     cells[m.kind+'-'+m.row] = Object.assign({}, a, {label:lab, kind:m.kind, status:'live',
+                                                     hasSym: !!m.sym,            // [S941] 종목 붙은 칸
                                                      demoLook: !!m.demoLook});   // [S874]
   });
   var R = '', M = '';
