@@ -108,7 +108,7 @@
        별명(누구) > 종목(무엇) > 브로커(어디)   ← 브로커가 제일 안 중요한데 전엔 별명과 같은 크기였다
      그래서 별명은 13.5cqh 로 되돌리고, 종목은 금색 0.80em, 브로커는 0.74em·흐리게로 내렸다.
      ★[메모리 규칙 261019] "칸 글씨 크기는 전역값(이름 13.5cqh)을 건드리지 않는다" —
-     알약(시드·포지션·주차)과 간격은 **원래대로 두었다**. 자리는 브로커 글씨를 낮춰서 만든다. */
+     알약(시드·포지션·일차)과 간격은 **원래대로 두었다**. 자리는 브로커 글씨를 낮춰서 만든다. */
   .acard .name{font-size:23px;font-size:13.5cqh;font-weight:700;white-space:nowrap;line-height:1;letter-spacing:-.008em;overflow:hidden;text-overflow:ellipsis}
   .acard .name .syml{font-style:normal;font-weight:700;font-size:.80em;letter-spacing:.01em;color:var(--gold);opacity:.95;padding:0 .14em}
   .acard .name .brk{font-style:normal;font-weight:600;font-size:.74em;letter-spacing:0;color:var(--mu);opacity:.85}
@@ -160,7 +160,7 @@
   .zone.real .acard.asdemo .pospill.on b{color:#D2E2F0}
   .zone.real .acard.asdemo .cell .cv{color:#C8D6E4}
 
-  /* [크리 260714] 매매 착수 후 N주차 — 포지션 칩 왼쪽.
+  /* [크리 260714→261019 S942] 매매 착수 후 N일차 — 포지션 칩 왼쪽.
      서버가 config/strategy_start.json 을 읽어 매일 자동 갱신한다.
      가상매매 검증을 시작하면 '몇 주째 쌓였나'가 가장 중요한 숫자가 된다. */
   .acard .weekpill{font-size:22px;font-size:14cqh;font-weight:700;color:var(--mu);
@@ -306,16 +306,16 @@ var PEND = {
 };
 
 var DEMO = {accounts:[
-  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0, week:3},
-  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7, week:5},
-  {acc:"acc14", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1},
-  {acc:"acc02", seed:58,    equity:97.05,    balance:98.60,   positions:2, week:6},
-  {acc:"acc06", seed:10000, equity:16831.85, balance:16465.79,positions:6, week:8},
-  {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0, week:1},
-  {acc:"acc12", seed:3000,  equity:2995.16,  balance:2995.16, positions:0, week:1},
-  {acc:"acc11", seed:2000,  equity:2034.00,  balance:2034.00, positions:0, week:1},
-  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, week:1},
-  {acc:"acc16", seed:2500,  equity:2500.00,  balance:2500.00, positions:0, week:1}
+  {acc:"acc10", seed:500,   equity:500.00,   balance:500.00,  positions:0, days:3},
+  {acc:"acc09", seed:3000,  equity:2436.16,  balance:2471.28, positions:7, days:5},
+  {acc:"acc14", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, days:1},
+  {acc:"acc02", seed:58,    equity:97.05,    balance:98.60,   positions:2, days:6},
+  {acc:"acc06", seed:10000, equity:16831.85, balance:16465.79,positions:6, days:8},
+  {acc:"acc13", seed:3000,  equity:2987.87,  balance:2987.87, positions:0, days:1},
+  {acc:"acc12", seed:3000,  equity:2995.16,  balance:2995.16, positions:0, days:1},
+  {acc:"acc11", seed:2000,  equity:2034.00,  balance:2034.00, positions:0, days:1},
+  {acc:"acc15", seed:2000,  equity:2000.00,  balance:2000.00, positions:0, days:1},
+  {acc:"acc16", seed:2500,  equity:2500.00,  balance:2500.00, positions:0, days:1}
 ], brief:[
   {name:"BITCOIN", price:62971.65, pct:-2.22, digits:2},
   {name:"GOLD",    price:4310.40,  pct:-0.15, digits:2},
@@ -357,11 +357,12 @@ function card(a){
   //   0개면 조용히(muted), 1개 이상이면 강조(on) — 한눈에 노출 상태가 보이게.
   var pos = (a.positions === undefined || a.positions === null) ? 0 : (+a.positions);
   var posCls = pos > 0 ? 'pospill on' : 'pospill';
-  // [크리 260714] 매매 착수 후 N주차. 서버(dash_server._week_no)가 매일 자동 계산.
+  // [크리 261019 S942] 주인님 지시 — 주차를 **일수**로 바꿨다. 거래일이 아니라 달력 날짜 더하기.
+  //   서버(dash_server._day_no)가 (오늘−시작일)+1 로 매일 자동 계산한다.
   //   시작일은 config/strategy_start.json — 전략을 바꾸면 거기 날짜만 새로 찍으면 리셋.
-  var wk = (a.week === undefined || a.week === null) ? null : (+a.week);
+  var wk = (a.days === undefined || a.days === null) ? null : (+a.days);
   var wkHtml = (wk === null) ? ''
-    : '<span class="weekpill mono"><b>'+wk+'</b>주차</span>';
+    : '<span class="weekpill mono"><b>'+wk+'</b>일차</span>';
   return '<div class="acard'+(asDemo?' asdemo':'')+(a.hasSym?' withsym':'')+'"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span></div>'
