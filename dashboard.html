@@ -49,6 +49,7 @@
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,108,.55)}70%{box-shadow:0 0 0 14px rgba(255,92,108,0)}100%{box-shadow:0 0 0 0 rgba(255,92,108,0)}}
   .datebox{font-size:25px;font-weight:700;color:var(--gold)}
   .daycnt{display:inline-block;vertical-align:middle;margin-left:18px;font-size:30px;font-weight:800;line-height:1;color:#1a1710;background:linear-gradient(180deg,#FFD47A,#E8B65A);border-radius:999px;padding:8px 20px;letter-spacing:.01em;box-shadow:0 2px 18px rgba(232,182,90,.35)}  /* [S1029 261021] 제목 옆 · 크게 */
+  .daycnt .since{font-size:17px;font-weight:600;opacity:.75;margin-right:12px;letter-spacing:0}  /* [S1030] 시작일 같이 */
   .clock{font-size:35px;font-weight:600;line-height:1}
   .clock .z{color:var(--mu);font-size:15px;font-weight:600;margin-left:10px;letter-spacing:.08em}
   .byline{font-size:16px;color:var(--mu);font-weight:600;margin-top:1px}
@@ -284,9 +285,9 @@ var ROWS_DEMO = 5;   // 오른쪽 — 원래대로
 
 var MAP = {
   acc10: {kind:"real", row:1, label:"제우스 · Vantage"},
-  acc09: {kind:"real", row:2, label:"하데스 · Vantage"},
+  acc09: {kind:"real", row:2, label:"하데스 · Vantage", sym:"GOLD H1\u00b71\ud638\ub1cc"},
   acc02: {kind:"real", row:3, label:"포세이돈 · FxPro"},
-  acc14: {kind:"real", row:4, label:"아테나 · Vantage"},
+  acc14: {kind:"real", row:4, label:"아테나 · Vantage", sym:"GOLD H1\u00b710\ud638\ub1cc"},
   acc06: {kind:"demo", row:1, label:"전략1호 · Vantage", sym:"GOLD H1"},
   acc13: {kind:"demo", row:2, label:"전략9호 · IC Markets", sym:"WTI H1"},
   acc12: {kind:"demo", row:3, label:"전략10호 · Vantage", sym:"GOLD H1"},
@@ -449,7 +450,7 @@ function tick(){
   try{ var _s0 = new Date(2026, 5, 11);                       // 첫 가동일 2026-06-11 [실측: dash 폴더 최초 파일]
        var _k0 = new Date(k.getFullYear(), k.getMonth(), k.getDate());
        var _dc = Math.floor((_k0 - _s0) / 86400000) + 1;
-       var _de = document.getElementById('daycnt'); if(_de) _de.textContent = _dc + '일째'; }catch(e){}
+       var _de = document.getElementById('daycnt'); if(_de) _de.innerHTML = '<span class="since">2026.06.11 부터</span>' + _dc + '일째'; }catch(e){}
   $('#date').textContent = k.getFullYear() + '-'
     + String(k.getMonth()+1).padStart(2,'0') + '-'
     + String(k.getDate()).padStart(2,'0') + ' (' + WD[k.getDay()] + ')';
