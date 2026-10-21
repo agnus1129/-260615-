@@ -48,7 +48,7 @@
   .live .txt{font-weight:600;letter-spacing:.12em;font-size:16px;color:#fff}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,108,.55)}70%{box-shadow:0 0 0 14px rgba(255,92,108,0)}100%{box-shadow:0 0 0 0 rgba(255,92,108,0)}}
   .datebox{font-size:25px;font-weight:700;color:var(--gold)}
-  .daycnt{font-size:19px;font-weight:700;color:var(--gold);background:rgba(255,194,75,.10);border:1px solid rgba(255,194,75,.35);border-radius:999px;padding:3px 12px;letter-spacing:.02em}  /* [S1027 261021] 첫 가동일부터 N일째 */
+  .daycnt{display:inline-block;vertical-align:middle;margin-left:18px;font-size:30px;font-weight:800;line-height:1;color:#1a1710;background:linear-gradient(180deg,#FFD47A,#E8B65A);border-radius:999px;padding:8px 20px;letter-spacing:.01em;box-shadow:0 2px 18px rgba(232,182,90,.35)}  /* [S1029 261021] 제목 옆 · 크게 */
   .clock{font-size:35px;font-weight:600;line-height:1}
   .clock .z{color:var(--mu);font-size:15px;font-weight:600;margin-left:10px;letter-spacing:.08em}
   .byline{font-size:16px;color:var(--mu);font-weight:600;margin-top:1px}
@@ -234,13 +234,12 @@
   <header class="hdr">
     <div class="left">
       <div class="eyebrow"><span class="bar"></span>AUTOMATED OVERSEAS FUTURES<span id="eyeb"></span></div>
-      <div class="title">해외선물 자동매매 실황 · 실전 &amp; 모의 <span class="by">by Pro-man</span></div>
+      <div class="title">해외선물 자동매매 실황 · 실전 &amp; 모의 <span class="by">by Pro-man</span><span class="daycnt" id="daycnt" title="시황판 첫 가동 2026-06-11 부터">--일째</span></div>
       <span class="u"></span>
     </div>
     <div class="right">
       <div class="live"><span class="dot"></span><span class="txt">LIVE · 24/7</span></div>
       <div class="datebox" id="date">------ (-)</div>
-      <div class="daycnt" id="daycnt" title="시황판 첫 가동 2026-06-11 (dash 폴더 최초 파일) 부터">--일째</div>
       <div class="clock mono"><span id="clock">00:00:00</span><span class="z">KST</span></div>
       <div class="byline">개발자 <b>박상규</b></div>
     </div>
