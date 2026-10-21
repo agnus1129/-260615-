@@ -48,6 +48,7 @@
   .live .txt{font-weight:600;letter-spacing:.12em;font-size:16px;color:#fff}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,92,108,.55)}70%{box-shadow:0 0 0 14px rgba(255,92,108,0)}100%{box-shadow:0 0 0 0 rgba(255,92,108,0)}}
   .datebox{font-size:25px;font-weight:700;color:var(--gold)}
+  .daycnt{font-size:19px;font-weight:700;color:var(--gold);background:rgba(255,194,75,.10);border:1px solid rgba(255,194,75,.35);border-radius:999px;padding:3px 12px;letter-spacing:.02em}  /* [S1027 261021] 첫 가동일부터 N일째 */
   .clock{font-size:35px;font-weight:600;line-height:1}
   .clock .z{color:var(--mu);font-size:15px;font-weight:600;margin-left:10px;letter-spacing:.08em}
   .byline{font-size:16px;color:var(--mu);font-weight:600;margin-top:1px}
@@ -239,6 +240,7 @@
     <div class="right">
       <div class="live"><span class="dot"></span><span class="txt">LIVE · 24/7</span></div>
       <div class="datebox" id="date">------ (-)</div>
+      <div class="daycnt" id="daycnt" title="시황판 첫 가동 2026-06-11 (dash 폴더 최초 파일) 부터">--일째</div>
       <div class="clock mono"><span id="clock">00:00:00</span><span class="z">KST</span></div>
       <div class="byline">개발자 <b>박상규</b></div>
     </div>
@@ -445,6 +447,10 @@ function tick(){
   var k = new Date(n.getTime() + (n.getTimezoneOffset() + 540) * 60000);
   $('#clock').textContent = [k.getHours(), k.getMinutes(), k.getSeconds()]
     .map(function(x){ return String(x).padStart(2,'0'); }).join(':');
+  try{ var _s0 = new Date(2026, 5, 11);                       // 첫 가동일 2026-06-11 [실측: dash 폴더 최초 파일]
+       var _k0 = new Date(k.getFullYear(), k.getMonth(), k.getDate());
+       var _dc = Math.floor((_k0 - _s0) / 86400000) + 1;
+       var _de = document.getElementById('daycnt'); if(_de) _de.textContent = _dc + '일째'; }catch(e){}
   $('#date').textContent = k.getFullYear() + '-'
     + String(k.getMonth()+1).padStart(2,'0') + '-'
     + String(k.getDate()).padStart(2,'0') + ' (' + WD[k.getDay()] + ')';
