@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- build 261027-1958 S1315 solo-card return-rate label one line -->
 <html lang="ko" translate="no" class="notranslate">
 <head>
 <meta charset="UTF-8">
@@ -228,6 +229,9 @@
   .zone.demo.solo .acard.withsym .weekpill{font-size:18px;font-size:11.4cqh;padding:3px 9px}
   .zone.demo.solo .acard.withsym .chead{gap:6px}
   .zone.demo.solo .acard.withsym .nm{flex:1 1 68%}
+  /* [크리 261027 S1315] 솔로 칸 — 한 줄 이름표에 맞춰 숫자 자리를 넓힌다. */
+  .zone.demo.solo .acard .cell .ck{max-width:36%;white-space:nowrap}
+  .zone.demo.solo .acard .grid4{gap:6px 16px}
 </style>
 </head>
 <body>
@@ -366,6 +370,10 @@ function card(a){
   var wk = (a.days === undefined || a.days === null) ? null : (+a.days);
   var wkHtml = (wk === null) ? ''
     : '<span class="weekpill mono"><b>'+wk+'</b>일차</span>';
+  /* [크리 261027 S1315] 전략13호(솔로) 칸만 수익률 이름표를 한 줄로 — 글씨 크기는 그대로.
+     솔로 칸은 높이가 커서 이름표가 두 줄로 접히면 칸 높이와 같아져 잘린다(여유 0). */
+  var rk = (a.kind === 'solo') ? '확정 수익률' : '누적 확정 수익률';
+  var vk = (a.kind === 'solo') ? '평가 수익률' : '누적 평가 수익률';
   return '<div class="acard'+(asDemo?' asdemo':'')+(a.hasSym?' withsym':'')+'"><div class="accent"></div><div class="cin">'
     + '<div class="chead">'
     +   '<div class="nm"><span class="name">'+a.label+'</span></div>'
@@ -376,8 +384,8 @@ function card(a){
     + '<div class="grid4">'
     +   '<div class="cell"><div class="ck">현재 잔고</div>'+money(bal)+'</div>'
     +   '<div class="cell"><div class="ck">평가 잔고</div>'+money(eq)+'</div>'
-    +   '<div class="cell"><div class="ck">누적 확정 수익률</div><div class="cv mono '+cls(rp)+'">'+sgn(rp)+fmt(Math.abs(rp))+'%</div></div>'
-    +   '<div class="cell"><div class="ck">누적 평가 수익률</div><div class="cv mono '+cls(vp)+'">'+sgn(vp)+fmt(Math.abs(vp))+'%</div></div>'
+    +   '<div class="cell"><div class="ck">'+rk+'</div><div class="cv mono '+cls(rp)+'">'+sgn(rp)+fmt(Math.abs(rp))+'%</div></div>'
+    +   '<div class="cell"><div class="ck">'+vk+'</div><div class="cv mono '+cls(vp)+'">'+sgn(vp)+fmt(Math.abs(vp))+'%</div></div>'
     + '</div>'
     + '</div></div>';
 }
